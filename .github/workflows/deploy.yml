@@ -29,8 +29,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          VITE_NAVER_CLIENT_ID: ${{ vars.VITE_NAVER_CLIENT_ID }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

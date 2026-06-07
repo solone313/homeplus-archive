@@ -3,9 +3,9 @@
  */
 
 // Naver Cloud Platform — Web Dynamic Map Client ID.
-// Web Dynamic Map은 브라우저 노출 전제라 안전. Secret 키는 별도 보관 (서버 API 용도).
-export const NAVER_CLIENT_ID: string =
-  import.meta.env.VITE_NAVER_CLIENT_ID ?? "5x00r3vn3h";
+// Web Dynamic Map은 브라우저 노출 전제 (실제 보안은 NCP 콘솔의 Web 서비스 URL 화이트리스트).
+// Secret 키(X-NCP-APIGW-API-KEY)는 절대 여기 두지 말 것 — 그건 서버 API 용도.
+export const NAVER_CLIENT_ID: string = "5x00r3vn3h";
 
 // 홈플러스 가양점 · 양천로 431 (네이버 플레이스 626133525)
 export const SITE_COORDS = { lat: 37.564264, lng: 126.84996 } as const;
