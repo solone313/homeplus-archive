@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@theme {
+  /* Silver palette — cool, slightly metallic */
+  --color-silver-50: #f6f6f8;
+  --color-silver-100: #ececef;
+  --color-silver-200: #d8d9dd;
+  --color-silver-300: #b8bac0;
+  --color-silver-400: #8b8d94;
+  --color-silver-500: #5c5e64;
+  --color-silver-600: #3a3b40;
+
+  --color-paper: #ececef;
+  --color-paper-soft: #f6f6f8;
+  --color-surface: #d8d9dd;
+  --color-ink: #18181b;
+  --color-ink-soft: #3a3b40;
+  --color-mute: #8b8d94;
+  --color-line: #cdced3;
+
+  /* Pink accent */
+  --color-accent: #ec4899;
+  --color-accent-soft: #fbcfe8;
+  --color-accent-deep: #be185d;
+
+  --font-display: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/PretendardVariable.woff2")
+    format("woff2-variations");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-feature-settings: "ss01", "ss02";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+
+@layer base {
+  /* keep these inside @layer base so Tailwind utilities (text-*, font-*) override them */
+  a,
+  button {
+    font-family: inherit;
+    color: inherit;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+}
+
+/* Frame system — "empty rectangle that gets filled" */
+.frame {
+  position: relative;
+  background: var(--color-paper-soft);
+  border: 1px solid var(--color-line);
+  overflow: hidden;
+}
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed color-mix(in srgb, var(--color-mute) 50%, transparent);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+  transition: opacity 320ms ease;
+}
+.frame.is-filled::before {
+  opacity: 0;
+}
+.frame > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Dim rule line */
+.rule-dim {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-mute);
+}
+.rule-dim::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Lenis-friendly helpers */
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Naver Maps tiles & internals must not inherit Tailwind preflight resets that break absolute-positioned tile layout. */
+.naver-map img {
+  display: inline;
+  max-width: none;
+  height: auto;
+  vertical-align: baseline;
+}
+.naver-map * {
+  box-sizing: content-box;
+}
+
+.h-screen-d {
+  height: 100dvh;
+}
+.min-h-screen-d {
+  min-height: 100dvh;
+}
+
+/* metallic shimmer for hero pulse — subtle */
+.silver-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--color-silver-100) 0%,
+    var(--color-silver-50) 35%,
+    var(--color-paper) 50%,
+    var(--color-silver-50) 65%,
+    var(--color-silver-100) 100%
+  );
+  background-size: 200% 100%;
+  animation: silver-shimmer 9s linear infinite;
+}
+@keyframes silver-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: 0 0; }
+}
