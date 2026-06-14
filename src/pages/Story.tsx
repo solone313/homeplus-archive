@@ -86,7 +86,7 @@ export function Story() {
             글자 아래로 작은 평면도 한 장이 떠오릅니다.
           </p>
         </header>
-        <SloganKerning />
+        <SloganKerning planImage={`${import.meta.env.BASE_URL}slogan-plan-placeholder.png`} />
       </section>
 
       {/* 01 INTRO VIDEO ───────────────────────────────────── */}

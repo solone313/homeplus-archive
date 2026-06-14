@@ -6,6 +6,8 @@ type Props = {
   voidWord?: string;
   autoplay?: boolean;
   delay?: number;
+  /** Optional architectural drawing image. When provided, replaces the SVG plan. */
+  planImage?: string;
 };
 
 export function SloganKerning({
@@ -13,6 +15,7 @@ export function SloganKerning({
   voidWord = "고립",
   autoplay = true,
   delay = 350,
+  planImage,
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -72,7 +75,7 @@ export function SloganKerning({
   };
 
   useEffect(() => {
-    if (!trackRef.current) return;
+    if (!trackRef.current || !containerRef.current) return;
     applyOffsets(wideGap, true);
 
     if (reducedMotion || !autoplay) {
@@ -82,21 +85,46 @@ export function SloganKerning({
       return;
     }
 
+    let played = false;
+    let ctx: ReturnType<typeof gsap.context> | null = null;
     const targets = computeOffsets(narrowGap);
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        delay: delay / 1000,
-        onComplete: () => setPlanVisible(true),
-      });
-      tl.to(glyphRefs.current.filter(Boolean), {
-        x: (i: number) => targets[i],
-        duration: 1.6,
-        ease: "power3.inOut",
-        stagger: { each: 0.018, from: "center" },
-      });
-    }, trackRef);
 
-    return () => ctx.revert();
+    const run = () => {
+      if (played) return;
+      played = true;
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({
+          delay: delay / 1000,
+          onComplete: () => setPlanVisible(true),
+        });
+        tl.to(glyphRefs.current.filter(Boolean), {
+          x: (i: number) => targets[i],
+          duration: 1.6,
+          ease: "power3.inOut",
+          stagger: { each: 0.018, from: "center" },
+        });
+      }, trackRef);
+    };
+
+    // Trigger when section enters viewport, not on mount
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            run();
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(containerRef.current);
+
+    return () => {
+      io.disconnect();
+      ctx?.revert();
+    };
   }, [chars, wideGap, narrowGap, autoplay, delay, reducedMotion, isMobile]);
 
   useEffect(() => {
@@ -237,6 +265,36 @@ export function SloganKerning({
         )}
       </div>
 
+      {planImage && (
+        <figure
+          className="relative mt-4 w-full max-w-[1180px] md:mt-6"
+          style={{
+            opacity: planVisible ? 1 : 0,
+            transform: planVisible ? "translateY(0)" : "translateY(10px)",
+            transition: reducedMotion
+              ? "none"
+              : "opacity 0.9s ease-out, transform 0.9s ease-out",
+          }}
+        >
+          <div className="relative overflow-hidden border border-line bg-white">
+            <img
+              src={planImage}
+              alt="평면도 — 사이집 가양"
+              className="block h-auto w-full"
+            />
+          </div>
+          {/* Corner ticks (blueprint feel) */}
+          <span aria-hidden className="pointer-events-none absolute -left-[3px] -top-[3px] h-2 w-2 border-l border-t border-ink/60" />
+          <span aria-hidden className="pointer-events-none absolute -right-[3px] -top-[3px] h-2 w-2 border-r border-t border-ink/60" />
+          <span aria-hidden className="pointer-events-none absolute -left-[3px] -bottom-[3px] h-2 w-2 border-l border-b border-ink/60" />
+          <span aria-hidden className="pointer-events-none absolute -right-[3px] -bottom-[3px] h-2 w-2 border-r border-b border-ink/60" />
+          <figcaption className="mt-2 flex items-baseline justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-mute">
+            <span>FIG · 01 — PLAN · SCALE 1:200</span>
+            <span className="text-accent">→ 평면이 단면을 품는다</span>
+          </figcaption>
+        </figure>
+      )}
+
       <svg
         ref={planRef}
         width={isMobile ? "100%" : 1180}
@@ -247,6 +305,7 @@ export function SloganKerning({
           maxWidth: "100%",
           marginTop: isMobile ? 8 : 16,
           opacity: 0,
+          display: planImage ? "none" : "block",
         }}
       >
         <line
