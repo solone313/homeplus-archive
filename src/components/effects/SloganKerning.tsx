@@ -29,17 +29,14 @@ export function SloganKerning({
 
   useEffect(() => {
     const mqMobile = window.matchMedia("(max-width: 640px)");
-    const mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const updateMobile = () => setIsMobile(mqMobile.matches);
-    const updateMotion = () => setReducedMotion(mqMotion.matches);
     updateMobile();
-    updateMotion();
     mqMobile.addEventListener("change", updateMobile);
-    mqMotion.addEventListener("change", updateMotion);
     return () => {
       mqMobile.removeEventListener("change", updateMobile);
-      mqMotion.removeEventListener("change", updateMotion);
     };
+    // NOTE: prefers-reduced-motion 무시 — 졸업작품 사이트라 애니메이션이
+    // 콘텐츠의 일부이므로 OS 설정 상관없이 강제로 재생.
   }, []);
 
   // Preferred wide spacing — clamped by container width below

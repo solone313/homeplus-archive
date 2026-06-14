@@ -27,15 +27,11 @@ export function HeroFortune() {
   const [bodyVisible, setBodyVisible] = useState(true);
   const lastIdxRef = useRef<number>(-1);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReducedMotion(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
+  // prefers-reduced-motion 을 의도적으로 무시 (졸업작품 사이트는 애니메이션이 콘텐츠).
+  // 호환을 위해 상태/리터럴은 유지하되 항상 false.
+  const reducedMotion = false;
+  const setReducedMotion = (_: boolean) => undefined;
+  void setReducedMotion;
 
   const pickNew = useCallback(() => {
     const next = pickIndex(lastIdxRef.current, FORTUNES.length);
@@ -206,13 +202,6 @@ export function HeroFortune() {
         }
         .hf-trigger.is-split .hf-left  { transform: translateX(-8%); }
         .hf-trigger.is-split .hf-right { transform: translateX(8%); }
-
-        @media (prefers-reduced-motion: reduce) {
-          .hf-halo { animation: none; opacity: 0.4; }
-          .hf-left, .hf-right { transition: none; }
-          .hf-trigger.is-split .hf-left,
-          .hf-trigger.is-split .hf-right { transform: none; }
-        }
       `}</style>
 
       {/* Modal */}

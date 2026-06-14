@@ -49,14 +49,9 @@ export function MagneticField({
     h: height,
   });
 
+  // prefers-reduced-motion 무시 — 졸업작품 사이트는 애니메이션이 콘텐츠.
   useEffect(() => {
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    reducedRef.current = mql.matches;
-    const onChange = (e: MediaQueryListEvent) => {
-      reducedRef.current = e.matches;
-    };
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
+    reducedRef.current = false;
   }, []);
 
   useEffect(() => {
