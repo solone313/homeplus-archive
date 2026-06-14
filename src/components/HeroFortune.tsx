@@ -294,7 +294,7 @@ export function HeroFortune() {
                     </span>
 
                     {/* Flip hint */}
-                    <span className="absolute right-0 bottom-0 font-mono text-[9px] tracking-[0.22em] text-mute/60 uppercase">
+                    <span className="absolute right-0 -bottom-1 font-mono text-[9px] tracking-[0.22em] text-mute/60 uppercase">
                       ↺ tap to flip
                     </span>
 
@@ -352,12 +352,12 @@ export function HeroFortune() {
                     </span>
 
                     {/* Flip hint */}
-                    <span className="absolute right-0 bottom-0 font-mono text-[9px] tracking-[0.22em] text-mute/60 uppercase">
+                    <span className="absolute right-0 -bottom-1 font-mono text-[9px] tracking-[0.22em] text-mute/60 uppercase">
                       ↺ back to quote
                     </span>
 
                     {/* Body — flex-1 fills back face, scrolls internally if content exceeds */}
-                    <div className="mt-6 flex-1 overflow-y-auto pr-1 pb-6">
+                    <div className="mt-6 flex-1 overflow-y-auto pr-1 pb-12">
                       <div aria-hidden className="mb-6 w-12 border-t border-dashed border-ink/20" />
 
                       {/* SOURCE */}

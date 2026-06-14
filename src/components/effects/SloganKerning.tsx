@@ -18,6 +18,7 @@ export function SloganKerning({
   planImage,
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const kerningBlockRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const planRef = useRef<SVGSVGElement | null>(null);
   const glyphRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -41,8 +42,20 @@ export function SloganKerning({
     };
   }, []);
 
-  const wideGap = isMobile ? 24 : 50;
-  const narrowGap = isMobile ? 12 : 22;
+  // Preferred wide spacing — clamped by container width below
+  const preferredWideGap = isMobile ? 30 : 68;
+  const narrowGap = isMobile ? 2 : 4;
+
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const update = () => setContainerWidth(el.clientWidth);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   const glyphSize = isMobile ? 48 : 88;
   const trackHeight = isMobile ? 170 : 280;
   const planHeight = isMobile ? 120 : 180;
@@ -50,6 +63,16 @@ export function SloganKerning({
   const chars = useMemo(() => {
     return Array.from(slogan).map((c) => (c === " " ? "\u00A0" : c));
   }, [slogan]);
+
+  // wideGap: prefer the spread we want, but never exceed container width
+  const wideGap = useMemo(() => {
+    if (containerWidth === 0) return preferredWideGap;
+    const sidePad = glyphSize * 0.9; // leave room for half-glyph at each edge
+    const maxFit = Math.floor(
+      (containerWidth - sidePad) / Math.max(1, chars.length - 1),
+    );
+    return Math.max(narrowGap + 6, Math.min(preferredWideGap, maxFit));
+  }, [containerWidth, preferredWideGap, glyphSize, chars.length, narrowGap]);
 
   const voidStart = useMemo(() => slogan.indexOf(voidWord), [slogan, voidWord]);
   const voidEnd = voidStart >= 0 ? voidStart + voidWord.length - 1 : -1;
@@ -95,15 +118,40 @@ export function SloganKerning({
       ctx = gsap.context(() => {
         const tl = gsap.timeline({
           delay: delay / 1000,
-          onComplete: () => setPlanVisible(true),
         });
+        // 1) Glyphs converge
         tl.to(glyphRefs.current.filter(Boolean), {
           x: (i: number) => targets[i],
           duration: 1.6,
           ease: "power3.inOut",
           stagger: { each: 0.018, from: "center" },
         });
-      }, trackRef);
+        // 2) Glyphs fade away into nothing (overlap with end of merge)
+        tl.to(
+          glyphRefs.current.filter(Boolean),
+          {
+            opacity: 0,
+            duration: 0.55,
+            ease: "power2.in",
+            stagger: { each: 0.01, from: "center" },
+          },
+          "-=0.55",
+        );
+        // 3) Kerning block collapses (height + opacity → 0) — plan rises into view
+        tl.to(
+          kerningBlockRef.current,
+          {
+            opacity: 0,
+            height: 0,
+            marginTop: 0,
+            marginBottom: 0,
+            duration: 0.55,
+            ease: "power2.inOut",
+            onComplete: () => setPlanVisible(true),
+          },
+          "-=0.15",
+        );
+      });
     };
 
     // Trigger when section enters viewport, not on mount
@@ -171,6 +219,11 @@ export function SloganKerning({
       ref={containerRef}
       className="w-full bg-paper text-ink flex flex-col items-center justify-center py-8 px-4 select-none"
     >
+      <div
+        ref={kerningBlockRef}
+        className="flex w-full flex-col items-center"
+        style={{ overflow: "hidden" }}
+      >
       <div
         className="font-mono text-[10px] tracking-[0.3em] text-mute mb-4 uppercase"
         style={{ letterSpacing: "0.3em" }}
@@ -263,6 +316,7 @@ export function SloganKerning({
             VOID
           </div>
         )}
+      </div>
       </div>
 
       {planImage && (

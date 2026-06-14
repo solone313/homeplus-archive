@@ -1,5 +1,6 @@
 import { Frame } from "../components/Frame";
 import { HeroFortune } from "../components/HeroFortune";
+import { SaiLogo } from "../components/SaiLogo";
 import { VideoPlayer } from "../components/VideoPlayer";
 import { NaverMap } from "../components/NaverMap";
 import { LayerStack } from "../components/LayerStack";
@@ -27,7 +28,10 @@ export function Story() {
       <section id="hero" className="relative w-full bg-white">
         <div className="relative z-10 mx-auto flex max-w-[1440px] flex-col px-4 pb-16 pt-16 md:px-10 md:pb-20 md:pt-24">
           <div>
-            <p className="rule-dim">SCENE 00 — INTRO</p>
+            <p className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute">
+              <SaiLogo className="h-[10px] w-auto" />
+              SCENE 00 — INTRO
+            </p>
 
             {/* Architectural plate — clean photo, no chips, no caption */}
             <figure className="mt-5 md:mt-8">
@@ -77,7 +81,10 @@ export function Story() {
         className="relative mx-auto max-w-[1440px] scroll-mt-16 overflow-hidden border-t border-line/60 px-4 py-16 md:px-10 md:py-24"
       >
         <header className="mb-8 md:mb-12">
-          <p className="rule-dim mb-3 md:mb-4">SCENE 00.5 — SLOGAN AS PLAN</p>
+          <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:mb-4">
+            <SaiLogo className="h-[10px] w-auto" />
+            SCENE 00.5 — SLOGAN AS PLAN
+          </p>
           <h2 className="text-[7vw] font-extrabold leading-[1.04] tracking-[-0.03em] md:text-[clamp(2rem,4vw,3.5rem)]">
             슬로건은 평면이 아니라 단면이다.
           </h2>
@@ -345,7 +352,10 @@ function Section({
       className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 py-16 md:px-10 md:py-24"
     >
       <header className="mb-8 md:mb-12">
-        <p className="rule-dim mb-3 md:mb-4">{tag}</p>
+        <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:mb-4">
+        <SaiLogo className="h-[10px] w-auto" />
+        {tag}
+      </p>
         <h2 className="text-[8vw] font-extrabold leading-[1] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
           {title}
         </h2>
