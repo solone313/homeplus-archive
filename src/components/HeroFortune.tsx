@@ -107,7 +107,7 @@ export function HeroFortune() {
         >
           {/* Left half — clipped to left 50% of image */}
           <img
-            src="/saijip-combined.png"
+            src={`${import.meta.env.BASE_URL}saijip-combined.png`}
             alt="사이집"
             aria-hidden
             className="hf-left absolute inset-0 h-full w-full select-none object-contain"
@@ -115,7 +115,7 @@ export function HeroFortune() {
           />
           {/* Right half — clipped to right 50% */}
           <img
-            src="/saijip-combined.png"
+            src={`${import.meta.env.BASE_URL}saijip-combined.png`}
             alt=""
             aria-hidden
             className="hf-right absolute inset-0 h-full w-full select-none object-contain"
