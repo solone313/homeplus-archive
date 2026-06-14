@@ -135,17 +135,17 @@ export function HeroFortune() {
             }}
           />
 
-          {/* Click hit area — over the central bar region */}
+          {/* Click hit area — wide central strip over most of the logo */}
           <button
             type="button"
             onClick={openModal}
             aria-label="건축가의 한 마디 꺼내기"
             className="absolute z-10 cursor-pointer rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             style={{
-              left: "42%",
-              width: "16%",
-              top: "8%",
-              height: "62%",
+              left: "18%",
+              width: "64%",
+              top: "0%",
+              height: "100%",
             }}
           >
             <span className="sr-only">건축가의 한 마디 꺼내기</span>
