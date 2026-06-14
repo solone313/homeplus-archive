@@ -18,7 +18,7 @@ export const STORY_INTRO_POSTER = ""; // e.g. "/media/story-intro-poster.jpg"
 export const FILM_VIDEO = ""; // e.g. "/media/film.mp4"
 export const FILM_POSTER = ""; // e.g. "/media/film-poster.jpg"
 export const DRAWINGS_PDF = ""; // e.g. "/media/drawings.pdf"
-export const HERO_IMAGE = ""; // e.g. "/media/hero.jpg"
+export const HERO_IMAGE = "/hero-main.png";
 
 // LIFE BEYOND THE ROOM — 4 location renders (fill once assets arrive)
 export const LIFE_SCENES: { id: string; src: string; title: string; caption: string }[] = [

@@ -1,9 +1,13 @@
 import { Frame } from "../components/Frame";
+import { HeroFortune } from "../components/HeroFortune";
 import { VideoPlayer } from "../components/VideoPlayer";
 import { NaverMap } from "../components/NaverMap";
 import { LayerStack } from "../components/LayerStack";
 import { SwipeGallery } from "../components/SwipeGallery";
 import { Lightbox } from "../components/Lightbox";
+import { SloganKerning } from "../components/effects/SloganKerning";
+import { MagneticField } from "../components/effects/MagneticField";
+import { TracingOverlay } from "../components/effects/TracingOverlay";
 import {
   STORY_INTRO_VIDEO,
   STORY_INTRO_POSTER,
@@ -15,70 +19,45 @@ import {
   UNIT_INTERIOR,
 } from "../constants/site";
 
-const CHAPTERS = [
-  { id: "hero", num: "00", label: "" },
-  { id: "video", num: "01", label: "INTRO FILM" },
-  { id: "why", num: "02", label: "WHY" },
-  { id: "site", num: "03", label: "SITE" },
-  { id: "void", num: "04", label: "VOID" },
-  { id: "life", num: "05", label: "LIFE BEYOND THE ROOM" },
-  { id: "unit", num: "06", label: "UNIT" },
-];
-
 export function Story() {
   return (
     <>
-      <ChapterRail />
 
       {/* 00 HERO ───────────────────────────────────── */}
-      <section id="hero" className="relative min-h-screen-d w-full">
-        <div className="absolute inset-0">
-          {HERO_IMAGE ? (
-            <img
-              src={HERO_IMAGE}
-              alt="대표 이미지"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          ) : (
-            <div className="silver-shimmer absolute inset-0" />
-          )}
-          {!HERO_IMAGE && (
-            <div className="absolute inset-0 grid place-items-center">
-              <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
-                대표 이미지 슬롯 · 6/18 예정
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div className="relative z-10 flex min-h-screen-d flex-col justify-between px-4 pb-28 pt-16 md:px-10 md:pb-20 md:pt-24">
-          <p className="rule-dim">SCENE 00 — INTRO</p>
-
+      <section id="hero" className="relative w-full bg-white">
+        <div className="relative z-10 mx-auto flex max-w-[1440px] flex-col px-4 pb-16 pt-16 md:px-10 md:pb-20 md:pt-24">
           <div>
-            <h1 className="flex items-baseline gap-1 text-[24vw] font-extrabold leading-[0.85] tracking-[-0.05em] md:text-[clamp(7rem,16vw,16rem)]">
-              <span>HOME</span>
-              <span className="relative inline-block translate-y-[-0.05em] px-[0.06em]">
-                <svg
-                  width="0.78em"
-                  height="0.78em"
-                  viewBox="0 0 100 100"
-                  className="inline-block"
-                  fill="none"
-                >
-                  <path
-                    d="M50 8 V92 M8 50 H92"
-                    stroke="var(--color-accent)"
-                    strokeWidth="14"
-                    strokeLinecap="square"
+            <p className="rule-dim">SCENE 00 — INTRO</p>
+
+            {/* Architectural plate — clean photo, no chips, no caption */}
+            <figure className="mt-5 md:mt-8">
+              <div className="relative aspect-[16/9] max-w-[960px] overflow-hidden border border-line bg-white">
+                {HERO_IMAGE ? (
+                  <img
+                    src={HERO_IMAGE}
+                    alt="사이집 가양"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
-                </svg>
-              </span>
+                ) : (
+                  <div className="silver-shimmer absolute inset-0 grid place-items-center">
+                    <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
+                      대표 이미지 슬롯 · 6/18 예정
+                    </span>
+                  </div>
+                )}
+              </div>
+            </figure>
+          </div>
+
+          <div className="mt-10 md:mt-14">
+            <h1 className="block">
+              <HeroFortune />
             </h1>
-            <p className="mt-3 max-w-xl text-base font-medium leading-tight tracking-tight md:mt-5 md:text-2xl">
-              비움으로 <span className="text-accent">삶</span>이 스며드는 집
+            <p className="mt-4 max-w-xl text-base font-medium leading-tight tracking-tight md:mt-6 md:text-2xl">
+              독립은 있되, <span className="text-accent">고립은 없다</span>
             </p>
             <p className="mt-2 max-w-md text-xs leading-relaxed text-ink-soft md:text-sm">
-              홈플러스가 쇼핑에 삶을 더했듯, 주거에 삶을 심는다.
+              옛 홈플러스 가양점 자리, 비움을 사이에 둔 다섯 슬래브의 집.
             </p>
 
             <a
@@ -90,6 +69,24 @@ export function Story() {
             </a>
           </div>
         </div>
+      </section>
+
+      {/* 00.5 SLOGAN KERNING — 자간이 좁혀지며 평면도 reveal ───── */}
+      <section
+        id="slogan"
+        className="relative mx-auto max-w-[1440px] scroll-mt-16 overflow-hidden border-t border-line/60 px-4 py-16 md:px-10 md:py-24"
+      >
+        <header className="mb-8 md:mb-12">
+          <p className="rule-dim mb-3 md:mb-4">SCENE 00.5 — SLOGAN AS PLAN</p>
+          <h2 className="text-[7vw] font-extrabold leading-[1.04] tracking-[-0.03em] md:text-[clamp(2rem,4vw,3.5rem)]">
+            슬로건은 평면이 아니라 단면이다.
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
+            14개의 글자는 각자 하중을 나눠 진 기둥, 그 사이 여백은 함께 쓰는 공간. 자간이 좁혀지면
+            글자 아래로 작은 평면도 한 장이 떠오릅니다.
+          </p>
+        </header>
+        <SloganKerning />
       </section>
 
       {/* 01 INTRO VIDEO ───────────────────────────────────── */}
@@ -209,6 +206,14 @@ export function Story() {
         }
         subtitle="방 · 골목 · 마을. 스케일을 옮기며 비움이 만드는 관계의 가능성."
       >
+        {/* Magnetic field — 12개 노드가 마우스에 따라 밀고 끌리며 가까워지면 점선으로 연결 */}
+        <div className="mb-6 md:mb-8">
+          <MagneticField cols={4} rows={3} width={1200} height={420} />
+          <p className="mt-3 font-mono text-[10px] tracking-[0.22em] text-mute">
+            ↳ 마우스를 가까이 가져가면 노드가 밀려나고, 멀어지면 천천히 끌려옵니다. 임계 거리 안에서는 점선이 잠시 맺힙니다.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
           {["방 · UNIT", "골목 · CIRCULATION", "마을 · PROGRAM"].map((label, i) => (
             <Frame
@@ -274,6 +279,14 @@ export function Story() {
         }
         subtitle="입면 · 단면 · 내부 렌더. 이미지 클릭 시 확대해서 볼 수 있습니다."
       >
+        {/* Tracing overlay — 네 개 방 카드 클릭 시 트레이싱지 한 장씩 누적되며 동선 곡선이 드러남 */}
+        <div className="mb-8 md:mb-12">
+          <TracingOverlay maxStack={3} />
+          <p className="mt-3 font-mono text-[10px] tracking-[0.22em] text-mute">
+            ↳ 닫힌 방 카드를 클릭하면 트레이싱지가 위에서 한 장씩 쌓이며 방 사이의 공유 공간이 곡선으로 드러납니다.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
           <div className="md:col-span-8">
             <Lightbox src={UNIT_ELEVATION} label="입면도" ratio="16/9" />
@@ -360,28 +373,3 @@ function Footnotes({ items }: { items: string[] }) {
   );
 }
 
-function ChapterRail() {
-  return (
-    <nav
-      aria-label="STORY 챕터"
-      className="pointer-events-none fixed right-2 top-1/2 z-40 hidden -translate-y-1/2 md:block"
-    >
-      <ul className="pointer-events-auto flex flex-col gap-1 font-mono text-[10px] tracking-[0.18em] text-mute">
-        {CHAPTERS.map((c) => (
-          <li key={c.id}>
-            <a
-              href={`#${c.id}`}
-              className="group flex items-center justify-end gap-2 py-1 transition-colors hover:text-ink"
-            >
-              <span className="hidden whitespace-nowrap opacity-0 transition-opacity group-hover:opacity-100 lg:inline">
-                {c.label}
-              </span>
-              <span>{c.num}</span>
-              <span className="block h-px w-4 bg-current transition-all group-hover:w-8" />
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}

@@ -14,14 +14,14 @@ export function Nav() {
         <div className="mx-auto flex h-12 max-w-[1440px] items-center justify-between px-4 md:h-14 md:px-8">
           <Link
             to="/"
-            className="group flex items-center gap-1.5 font-extrabold tracking-[-0.03em] text-ink"
-            aria-label="HOME+ 메인으로"
+            className="group flex items-center text-ink"
+            aria-label="사이집 메인으로"
           >
-            <span className="text-base md:text-lg">HOME</span>
-            <span className="inline-grid h-4 w-4 place-items-center md:h-5 md:w-5">
-              <span className="absolute h-4 w-[2px] bg-accent md:h-5" />
-              <span className="absolute h-[2px] w-4 bg-accent md:w-5" />
-            </span>
+            <img
+              src="/saijip-wordmark.png"
+              alt="사이집"
+              className="block h-5 w-auto md:h-6"
+            />
           </Link>
 
           {/* Desktop links */}

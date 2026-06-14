@@ -106,7 +106,7 @@ export function NaverMap({ ratio = "16/9", zoom = 16 }: Props) {
         const marker = new window.naver.maps.Marker({
           position: center,
           map,
-          title: "HOME+",
+          title: "사이집가양",
         }) as { setPosition: (p: unknown) => void };
 
         // DEV: click anywhere on the map to relocate the marker and log coords.
