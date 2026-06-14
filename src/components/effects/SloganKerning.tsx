@@ -24,7 +24,8 @@ export function SloganKerning({
   const glyphRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const [isMobile, setIsMobile] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  // prefers-reduced-motion 무시 — 졸업작품 사이트는 애니메이션이 콘텐츠.
+  const reducedMotion = false;
   const [planVisible, setPlanVisible] = useState(false);
 
   useEffect(() => {
