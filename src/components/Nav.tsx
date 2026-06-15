@@ -4,6 +4,7 @@ const ROUTES = [
   { to: "/", label: "STORY" },
   { to: "/drawings", label: "DRAWINGS" },
   { to: "/film", label: "FILM" },
+  { to: "/references", label: "REFERENCES" },
 ];
 
 export function Nav() {
@@ -59,7 +60,7 @@ export function Nav() {
 
       {/* Bottom tab bar — mobile only */}
       <nav
-        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-line/60 bg-paper/95 backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-line/60 bg-paper/95 backdrop-blur md:hidden"
         aria-label="주요 페이지"
       >
         {ROUTES.map((r) => (

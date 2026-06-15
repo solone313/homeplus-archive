@@ -10,6 +10,7 @@ import { Nav } from "./components/Nav";
 import { Story } from "./pages/Story";
 import { Drawings } from "./pages/Drawings";
 import { Film } from "./pages/Film";
+import { References } from "./pages/References";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" element={<Story />} />
         <Route path="/drawings" element={<Drawings />} />
         <Route path="/film" element={<Film />} />
+        <Route path="/references" element={<References />} />
         <Route
           path="*"
           element={
