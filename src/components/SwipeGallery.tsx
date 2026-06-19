@@ -88,8 +88,8 @@ export function SwipeGallery({ slides, ratio = "3/2" }: Props) {
               key={i}
               onClick={() => scrollTo(i)}
               aria-label={`slide ${i + 1}`}
-              className={`h-1 transition-all ${
-                i === selected ? "w-8 bg-accent" : "w-4 bg-line hover:bg-mute"
+              className={`h-1.5 transition-all ${
+                i === selected ? "w-10 bg-accent" : "w-4 bg-line/60 hover:bg-mute"
               }`}
             />
           ))}

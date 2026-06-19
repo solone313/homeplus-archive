@@ -112,8 +112,6 @@ export function MagneticField({
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
-    const isMobile = window.matchMedia("(max-width: 640px)").matches;
-
     const onMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.x = e.clientX - rect.left;
@@ -124,11 +122,20 @@ export function MagneticField({
     const onLeave = () => {
       mouseRef.current.active = false;
     };
+    const onTouch = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current.x = e.touches[0].clientX - rect.left;
+      mouseRef.current.y = e.touches[0].clientY - rect.top;
+      mouseRef.current.active = true;
+      mouseRef.current.lastMove = performance.now();
+    };
 
-    if (!isMobile) {
-      canvas.addEventListener("mousemove", onMove);
-      canvas.addEventListener("mouseleave", onLeave);
-    }
+    canvas.addEventListener("mousemove", onMove);
+    canvas.addEventListener("mouseleave", onLeave);
+    canvas.addEventListener("touchstart", onTouch, { passive: true });
+    canvas.addEventListener("touchmove", onTouch, { passive: true });
+    canvas.addEventListener("touchend", onLeave);
 
     const start = performance.now();
 
@@ -220,6 +227,9 @@ export function MagneticField({
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
       canvas.removeEventListener("mousemove", onMove);
       canvas.removeEventListener("mouseleave", onLeave);
+      canvas.removeEventListener("touchstart", onTouch);
+      canvas.removeEventListener("touchmove", onTouch);
+      canvas.removeEventListener("touchend", onLeave);
     };
   }, [displaySize.w, displaySize.h, threshold, attractRange, connectDist, cols, rows]);
 
@@ -234,7 +244,8 @@ export function MagneticField({
         VOID FIELD / {cols}×{rows} NODES
       </div>
       <div className="pointer-events-none absolute right-3 top-3 font-mono text-[10px] tracking-[0.24em] text-mute uppercase">
-        HOVER TO PERTURB · RELEASE 3000ms
+        <span className="hidden md:inline">HOVER TO PERTURB · RELEASE 3000ms</span>
+        <span className="md:hidden">TAP TO PERTURB</span>
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ export function Story() {
       <section id="hero" className="relative w-full bg-white">
         <div className="relative z-10 mx-auto flex max-w-[1440px] flex-col px-4 pb-16 pt-16 md:px-10 md:pb-20 md:pt-24">
           <div>
-            <p className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute">
+            <p className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
               <SaiLogo className="h-[10px] w-auto" />
               SCENE 00 — INTRO
             </p>
@@ -57,10 +57,10 @@ export function Story() {
             <h1 className="block">
               <HeroFortune />
             </h1>
-            <p className="mt-4 max-w-xl text-base font-medium leading-tight tracking-tight md:mt-6 md:text-2xl">
+            <p className="mt-5 max-w-xl text-xl font-medium leading-[1.3] tracking-tight md:mt-7 md:text-4xl">
               독립은 있되, <span className="text-accent">고립은 없다</span>
             </p>
-            <p className="mt-2 max-w-md text-xs leading-relaxed text-ink-soft md:text-sm">
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
               옛 홈플러스 가양점 자리, 비움을 사이에 둔 다섯 슬래브의 집.
             </p>
 
@@ -81,11 +81,11 @@ export function Story() {
         className="relative mx-auto max-w-[1440px] scroll-mt-16 overflow-hidden border-t border-line/60 px-4 py-16 md:px-10 md:py-24"
       >
         <header className="mb-8 md:mb-12">
-          <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:mb-4">
+          <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
             <SaiLogo className="h-[10px] w-auto" />
             SCENE 00.5 — SLOGAN AS PLAN
           </p>
-          <h2 className="text-[7vw] font-extrabold leading-[1.04] tracking-[-0.03em] md:text-[clamp(2rem,4vw,3.5rem)]">
+          <h2 className="text-[7vw] font-extrabold leading-[1.15] tracking-[-0.03em] md:text-[clamp(2rem,4vw,3.5rem)]">
             슬로건은 평면이 아니라 단면이다.
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
@@ -137,12 +137,8 @@ export function Story() {
             </Frame>
           ))}
         </div>
-        <Footnotes
-          items={[
-            "출처 1 — 자료 도착 시 교체",
-            "출처 2 — 자료 도착 시 교체",
-          ]}
-        />
+        {/* footnotes hidden until real sources arrive — keep array empty */}
+        <Footnotes items={[]} />
       </Section>
 
       {/* 03 SITE ───────────────────────────────────── */}
@@ -352,11 +348,11 @@ function Section({
       className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 py-16 md:px-10 md:py-24"
     >
       <header className="mb-8 md:mb-12">
-        <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:mb-4">
+        <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
         <SaiLogo className="h-[10px] w-auto" />
         {tag}
       </p>
-        <h2 className="text-[8vw] font-extrabold leading-[1] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
+        <h2 className="text-[8vw] font-extrabold leading-[1.15] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
           {title}
         </h2>
         {subtitle && (
@@ -371,6 +367,7 @@ function Section({
 }
 
 function Footnotes({ items }: { items: string[] }) {
+  if (items.length === 0) return null;
   return (
     <ol className="mt-5 space-y-1 border-t border-line/60 pt-4 font-mono text-[10px] leading-relaxed tracking-[0.05em] text-mute md:text-[11px]">
       {items.map((t, i) => (

@@ -165,7 +165,7 @@ export function HeroFortune() {
               whiteSpace: "nowrap",
             }}
           >
-            ↑ click · 한 마디 꺼내기
+            marginalia · 한 마디
           </span>
         </div>
       </div>
@@ -173,8 +173,8 @@ export function HeroFortune() {
       {/* Animation styles — halo breath, caption fade, split halves on click */}
       <style>{`
         @keyframes hf-halo-anim {
-          0%, 100% { opacity: 0.20; transform: translateX(-50%) scale(0.92); }
-          50%      { opacity: 0.55; transform: translateX(-50%) scale(1.1); }
+          0%, 100% { opacity: 0.08; transform: translateX(-50%) scale(0.94); }
+          50%      { opacity: 0.28; transform: translateX(-50%) scale(1.06); }
         }
         .hf-halo {
           animation: hf-halo-anim 2.6s ease-in-out infinite;
@@ -189,10 +189,10 @@ export function HeroFortune() {
           opacity: 0;
         }
 
-        /* Caption — quiet by default, full on hover */
-        .hf-caption { opacity: 0.55; }
+        /* Caption — very quiet by default, brighter on hover */
+        .hf-caption { opacity: 0.4; }
         .hf-wrapper:hover .hf-caption,
-        .hf-wrapper:focus-within .hf-caption { opacity: 1; }
+        .hf-wrapper:focus-within .hf-caption { opacity: 0.9; }
         .hf-wrapper.is-split .hf-caption { opacity: 0; }
 
         /* Left + right halves — swing apart on click */

@@ -21,7 +21,7 @@ export function PageShell({ tag, title, subtitle, children }: Props) {
             </p>
           )}
           {title && (
-            <h1 className="text-[14vw] font-extrabold leading-[0.92] tracking-[-0.035em] md:text-[clamp(3.5rem,7vw,6.5rem)]">
+            <h1 className="text-[14vw] font-extrabold leading-[1.05] tracking-[-0.035em] md:text-[clamp(3.5rem,7vw,6.5rem)]">
               {title}
             </h1>
           )}
