@@ -35,12 +35,16 @@ export function StreetviewTimeline() {
   // strip 자체 너비 대비 -((N-1)*100/N)% 만큼 왼쪽으로 이동.
   const xEnd = -((N - 1) * 100) / N;
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `${xEnd}%`]);
-  const finalOpacity = useTransform(scrollYProgress, [0.9, 0.99], [0, 1]);
 
   const [idx, setIdx] = useState(0);
+  // closing overlay 의 opacity 는 useTransform 의 [0.9, 0.99] 입력에서 동작이
+  // 어긋나 (framer-motion 12.38) 상태로 동기화. CSS transition 으로 부드럽게.
+  const [overlayOpacity, setOverlayOpacity] = useState(0);
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     const i = Math.min(N - 1, Math.max(0, Math.round(p * (N - 1))));
     setIdx((prev) => (prev !== i ? i : prev));
+    const op = p <= 0.88 ? 0 : p >= 0.99 ? 1 : (p - 0.88) / 0.11;
+    setOverlayOpacity((prev) => (Math.abs(prev - op) > 0.01 ? op : prev));
   });
 
   const current = STREETVIEW_FRAMES[idx];
@@ -113,9 +117,12 @@ export function StreetviewTimeline() {
         </div>
 
         {/* Closing overlay */}
-        <motion.div
+        <div
           className="pointer-events-none absolute inset-0 z-30 grid place-items-center bg-ink/55"
-          style={{ opacity: finalOpacity }}
+          style={{
+            opacity: overlayOpacity,
+            transition: "opacity 200ms linear",
+          }}
         >
           <div className="px-6 text-center">
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/55 md:text-[11px]">
@@ -127,7 +134,7 @@ export function StreetviewTimeline() {
               <span className="text-accent">한꺼번에</span>
             </p>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
