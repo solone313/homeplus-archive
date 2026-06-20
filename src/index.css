@@ -24,12 +24,13 @@
   --color-accent-soft: #fbcfe8;
   --color-accent-deep: #be185d;
 
-  /* 본문/UI 기본: 라틴=Asta Sans, 한글=윤고딕 (unicode-range 분기) */
-  --font-display: "SaiSans", "Apple SD Gothic Neo", system-ui, sans-serif;
-  /* 라틴 라벨/메타: Asta Sans 가 mono-ish 한 인상이라 동일 패밀리 사용 (별도 mono 폰트 없이 letter-spacing 으로 처리) */
+  /* 본문/UI 기본: 라틴=Asta Sans, 한글=윤고딕 → 윤고딕 파일 실패 시 Apple SD
+     Gothic Neo / Malgun Gothic 으로 자연 fallback. */
+  --font-display: "SaiSans", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  /* 라틴 라벨/메타: Asta Sans 가 mono-ish 한 인상이라 동일 패밀리 사용 */
   --font-mono: "SaiSans", ui-monospace, Menlo, monospace;
   /* 포인트/강조: Line Seed Sans KR — slogan/h1 강조 자리에 */
-  --font-point: "SaiPoint", "SaiSans", "Apple SD Gothic Neo", sans-serif;
+  --font-point: "SaiPoint", "SaiSans", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 
 * {
