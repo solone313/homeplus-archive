@@ -155,23 +155,40 @@ export function Story() {
       </Section>
 
       {/* 03 SITE ───────────────────────────────────── */}
-      <Section
+      {/* SCENE 03 header — separate section so the panorama below can use
+          position: sticky without being trapped under a transformed ancestor. */}
+      <section
         id="site"
-        tag="SCENE 03 — SITE"
-        title={
-          <>
-            상업이 대신한 공공성,<br className="md:block" />
-            <span className="text-accent">사라지는 자리</span>
-          </>
-        }
-        subtitle="2025.10.30 홈플러스 가양점 폐점. 25년간 동네의 부엌·갤러리·운동장이 한꺼번에 사라졌다."
+        className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 pt-16 md:px-10 md:pt-24"
       >
-        {/* Streetview timeline — 25년의 채도 감쇠 */}
-        <div className="mb-10 md:mb-14">
-          <StreetviewTimeline />
-        </div>
+        <header className="mb-0">
+          <RevealOnView as="p" delay={0} duration={400} className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
+            <SaiLogo className="h-[10px] w-auto" />
+            SCENE 03 — SITE
+          </RevealOnView>
+          <RevealOnView delay={80} duration={500}>
+            <h2 className="text-[8vw] font-extrabold leading-[1.15] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
+              상업이 대신한 공공성,<br className="md:block" />
+              <span className="text-accent">사라지는 자리</span>
+            </h2>
+          </RevealOnView>
+          <RevealOnView delay={160} duration={450}>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
+              2025.10.30 홈플러스 가양점 폐점. 25년간 동네의 부엌·갤러리·운동장이 한꺼번에 사라졌다.
+            </p>
+          </RevealOnView>
+        </header>
+      </section>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
+      {/* Streetview panorama — 가양 15년의 가로 흐름. Full-bleed, scroll-pinned. */}
+      <div className="mt-10 md:mt-14">
+        <StreetviewTimeline />
+      </div>
+
+      {/* SCENE 03 body — photos, map, layers */}
+      <section className="relative mx-auto max-w-[1440px] px-4 pb-16 md:px-10 md:pb-24">
+        <RevealOnView delay={0} duration={500}>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6 mt-12 md:mt-20">
           {/* Photo + plan */}
           <Frame
             ratio="4/3"
@@ -213,7 +230,8 @@ export function Story() {
             </p>
           </div>
         </div>
-      </Section>
+        </RevealOnView>
+      </section>
 
       {/* 04 VOID ───────────────────────────────────── */}
       <Section

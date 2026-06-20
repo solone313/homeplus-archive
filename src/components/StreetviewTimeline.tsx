@@ -1,109 +1,156 @@
 import { useEffect, useRef, useState } from "react";
-import { RevealOnView } from "./RevealOnView";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { STREETVIEW_FRAMES } from "../constants/site";
 
+gsap.registerPlugin(ScrollTrigger);
+
+const N = STREETVIEW_FRAMES.length;
+
 /**
- * 가양 홈플러스 25년 — 시간 순서대로 배치된 거리뷰 필름스트립.
- * 프레임이 좌→우로 도착하면서 채도가 점진적으로 빠짐. 마지막 프레임은
- * 흑백 (지워진 자리). 호버 시 6초에 걸쳐 천천히 원래 색으로 복원
- * — "기억의 제스처".
+ * 시간의 파노라마 — 가양 홈플러스 15년이 좌→우로 흐른다.
  *
- * 이미지가 아직 없으면 placeholder 슬롯으로 표시 (자료 도착 시 교체).
+ * Pin + horizontal-pan via GSAP ScrollTrigger (CSS sticky 와 Lenis 가 호환되지
+ * 않기 때문에 ScrollTrigger 가 정확한 방법). 가운데에 사진이 작게 떠 있고
+ * 양옆은 검은 여백 — 영화관식 framing.
  */
 export function StreetviewTimeline() {
-  const total = STREETVIEW_FRAMES.length;
-  const [tailVisible, setTailVisible] = useState(false);
+  const outerRef = useRef<HTMLElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
 
-  // Last-frame reveal delay + duration; trailing caption appears 600ms after it.
-  const lastDelay = (total - 1) * 120;
-  const lastDuration = 400 + (total - 1) * 100; // 400 → 800ms
-  const tailDelay = lastDelay + lastDuration + 600;
-  const timerRef = useRef<number | null>(null);
+  const [idx, setIdx] = useState(0);
+  const progressMV = useMotionValue(0);
+  const finalOpacity = useTransform(progressMV, [0.88, 0.99], [0, 1]);
 
   useEffect(() => {
-    timerRef.current = window.setTimeout(() => setTailVisible(true), tailDelay);
-    return () => {
-      if (timerRef.current != null) window.clearTimeout(timerRef.current);
-    };
-  }, [tailDelay]);
+    if (!outerRef.current || !pinRef.current || !stripRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Strip 전체 너비 = N×viewport, 끝까지 갔을 때 -((N-1)/N)*100% 만큼 이동.
+      const totalShiftPercent = -((N - 1) / N) * 100;
+
+      gsap.to(stripRef.current, {
+        xPercent: totalShiftPercent,
+        ease: "none",
+        scrollTrigger: {
+          trigger: outerRef.current,
+          start: "top top",
+          end: `+=${(N - 1) * 50}%`, // ~50vh of scroll per frame transition
+          pin: pinRef.current,
+          pinSpacing: true,
+          scrub: 0.4,
+          onUpdate: (self) => {
+            progressMV.set(self.progress);
+            const i = Math.min(
+              N - 1,
+              Math.max(0, Math.round(self.progress * (N - 1))),
+            );
+            setIdx((prev) => (prev !== i ? i : prev));
+          },
+        },
+      });
+    }, outerRef);
+
+    return () => ctx.revert();
+  }, [progressMV]);
+
+  const current = STREETVIEW_FRAMES[idx];
 
   return (
-    <div className="streetview-timeline">
-      <div className="mb-4 md:mb-6 flex items-baseline justify-between">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute">
-          지나간 25년
-        </p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute/70">
-          STREETVIEW · {STREETVIEW_FRAMES[0].year}–{STREETVIEW_FRAMES[total - 1].year}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-5 md:gap-3">
-        {STREETVIEW_FRAMES.map((frame, idx) => {
-          const delay = idx * 120;
-          const duration = 400 + idx * 100;
-          // Saturation steps: 1 → 0.8 → 0.55 → 0.3 → 0 (last frame is monochrome).
-          const sat = idx === total - 1 ? 0 : 1 - idx * 0.25;
-          const bright = 1 - idx * 0.03;
-          return (
-            <RevealOnView key={frame.year} delay={delay} duration={duration} y={10}>
-              <figure className="sv-frame group">
-                <figcaption className="mb-1.5 flex items-baseline justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-mute">
-                  <span>{frame.year}</span>
-                  <span className="text-mute/60">{String(idx + 1).padStart(2, "0")}</span>
-                </figcaption>
-                <div
-                  className="sv-frame-img relative aspect-[4/3] overflow-hidden border border-line bg-silver-100"
-                  style={{
-                    filter: `saturate(${sat}) brightness(${bright})`,
-                  }}
-                >
-                  {frame.src ? (
-                    <img
-                      src={frame.src}
-                      alt={`${frame.year}년 홈플러스 가양점 거리뷰`}
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover"
-                      onError={(e) => {
-                        // Hide broken img so the placeholder text shows through.
-                        (e.currentTarget as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                  ) : null}
-                  <span className="absolute inset-0 grid place-items-center font-mono text-[9px] tracking-[0.25em] text-mute/70 pointer-events-none">
-                    {frame.year} · 자료 예정
-                  </span>
-                </div>
-                <p className="mt-2 text-[11px] leading-snug text-ink-soft md:text-xs">
-                  {frame.context}
-                </p>
-              </figure>
-            </RevealOnView>
-          );
-        })}
-      </div>
-
-      <p
-        className="mt-6 max-w-xl font-mono text-[11px] leading-relaxed tracking-[0.06em] text-mute md:mt-8 md:text-xs"
-        style={{
-          opacity: tailVisible ? 1 : 0,
-          transform: tailVisible ? "translateY(0)" : "translateY(6px)",
-          transition: "opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1)",
-        }}
+    <section ref={outerRef as React.RefObject<HTMLElement>} className="relative">
+      <div
+        ref={pinRef}
+        className="relative h-screen w-full overflow-hidden bg-ink"
       >
-        ↳ 25년 — 동네의 부엌, 갤러리, 운동장이 한꺼번에. 프레임 위에 마우스를 올리면 그 해의 색이 잠시 돌아옵니다.
-      </p>
+        {/* Top header — site label + real-time year */}
+        <div className="pointer-events-none absolute inset-x-4 top-4 z-20 flex items-start justify-between md:inset-x-10 md:top-8">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/60 md:text-[11px]">
+            STREETVIEW · 가양
+            <span className="hidden md:inline"> · 양천로 431</span>
+          </p>
+          <div className="flex flex-col items-end gap-1">
+            <span className="font-mono text-3xl font-light leading-none tracking-tight text-paper md:text-5xl">
+              {current.year}
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/55 md:text-[11px]">
+              — {current.context}
+            </span>
+          </div>
+        </div>
 
-      <style>{`
-        .sv-frame-img {
-          transition: filter 600ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .sv-frame:hover .sv-frame-img,
-        .sv-frame:focus-within .sv-frame-img {
-          filter: saturate(1) brightness(1) !important;
-        }
-      `}</style>
-    </div>
+        {/* Horizontal strip */}
+        <div
+          ref={stripRef}
+          className="flex h-full"
+          style={{ width: `${N * 100}%` }}
+        >
+          {STREETVIEW_FRAMES.map((f, i) => {
+            const sat =
+              i === N - 1 ? 0 : Math.max(0.15, 1 - i * (1 / (N - 1)));
+            const brt = 1 - i * 0.015;
+            return (
+              <div
+                key={i}
+                className="relative grid h-full shrink-0 place-items-center"
+                style={{ width: `${100 / N}%` }}
+              >
+                <figure
+                  className="relative w-[86vw] max-w-[1100px]"
+                  style={{ aspectRatio: "3 / 2" }}
+                >
+                  <img
+                    src={f.src}
+                    alt={`${f.year}년 가양 홈플러스 — ${f.context}`}
+                    loading={i <= 1 ? "eager" : "lazy"}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    style={{
+                      filter: `saturate(${sat}) brightness(${brt})`,
+                    }}
+                  />
+                  {/* Per-frame label — bottom-left of photo */}
+                  <figcaption className="absolute bottom-2 left-2 z-10 bg-ink/65 px-2 py-1 font-mono text-[9px] tracking-[0.22em] text-paper backdrop-blur-sm md:bottom-3 md:left-3 md:text-[10px]">
+                    {f.year} · {f.context}
+                  </figcaption>
+                </figure>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom progress + endpoint labels */}
+        <div className="pointer-events-none absolute inset-x-4 bottom-6 z-20 md:inset-x-10 md:bottom-10">
+          <div className="relative h-px bg-paper/15">
+            <motion.div
+              className="absolute inset-0 h-px origin-left bg-accent"
+              style={{ scaleX: progressMV }}
+            />
+          </div>
+          <div className="mt-3 flex justify-between font-mono text-[9px] uppercase tracking-[0.22em] text-paper/50 md:text-[10px]">
+            <span>2010 · 개장</span>
+            <span>2025 · 폐점</span>
+          </div>
+        </div>
+
+        {/* Closing overlay — "25년 한꺼번에" fades in on last frame */}
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-30 grid place-items-center bg-ink/55"
+          style={{ opacity: finalOpacity }}
+        >
+          <div className="px-6 text-center">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/55 md:text-[11px]">
+              END · STREETVIEW
+            </p>
+            <p className="mt-4 text-4xl font-extralight leading-tight text-paper md:text-6xl">
+              25년
+              <br />
+              <span className="text-accent">한꺼번에</span>
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 }
 

@@ -40,20 +40,27 @@ export const UNIT_ELEVATION = "";
 export const UNIT_SECTION = "";
 export const UNIT_INTERIOR = "";
 
-// STREETVIEW TIMELINE — 가양 홈플러스 25년의 퇴색
-// 사진은 /public/streetview/{year}.jpg 에 떨어뜨리면 자동 연결.
-// 이미지가 없으면 컴포넌트가 placeholder 슬롯으로 표시.
+// STREETVIEW TIMELINE — 가양 홈플러스 15년의 퇴색
+// 사진은 /public/streetview/{01..10}.jpg 캡처 시간순. 연도 매핑은 추정.
 export type StreetviewFrame = {
   year: number;
   src: string;
-  /** 한 줄 컨텍스트 — 프레임 아래 캡션 */
+  /** 한 줄 컨텍스트 — 헤더에서 연도 옆에 표시 */
   context: string;
 };
 
+const sv = (n: number) =>
+  `${import.meta.env.BASE_URL}streetview/${String(n).padStart(2, "0")}.jpg`;
+
 export const STREETVIEW_FRAMES: StreetviewFrame[] = [
-  { year: 2010, src: `${import.meta.env.BASE_URL}streetview/2010.jpg`, context: "개장 직후" },
-  { year: 2014, src: `${import.meta.env.BASE_URL}streetview/2014.jpg`, context: "정점" },
-  { year: 2018, src: `${import.meta.env.BASE_URL}streetview/2018.jpg`, context: "변화의 시작" },
-  { year: 2022, src: `${import.meta.env.BASE_URL}streetview/2022.jpg`, context: "정체" },
-  { year: 2025, src: `${import.meta.env.BASE_URL}streetview/2025.jpg`, context: "폐점 · 2025.10" },
+  { year: 2010, src: sv(1), context: "개장 직후" },
+  { year: 2012, src: sv(2), context: "자리 잡힘" },
+  { year: 2014, src: sv(3), context: "동네의 부엌" },
+  { year: 2016, src: sv(4), context: "정점" },
+  { year: 2018, src: sv(5), context: "여전한 일상" },
+  { year: 2020, src: sv(6), context: "변화의 그늘" },
+  { year: 2022, src: sv(7), context: "발길이 줄어" },
+  { year: 2024, src: sv(8), context: "마지막 손님" },
+  { year: 2025, src: sv(9), context: "폐점 직전" },
+  { year: 2025, src: sv(10), context: "간판이 사라진 뒤" },
 ];
