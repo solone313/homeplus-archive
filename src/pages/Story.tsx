@@ -1,22 +1,14 @@
-import { Frame } from "../components/Frame";
 import { HeroFortune } from "../components/HeroFortune";
 import { RevealOnView } from "../components/RevealOnView";
 import { SaiLogo } from "../components/SaiLogo";
 import { VideoPlayer } from "../components/VideoPlayer";
 import { NaverMap } from "../components/NaverMap";
-import { SwipeGallery } from "../components/SwipeGallery";
 import { Lightbox } from "../components/Lightbox";
 import { StreetviewTimeline } from "../components/StreetviewTimeline";
-import { MagneticField } from "../components/effects/MagneticField";
-import { TracingOverlay } from "../components/effects/TracingOverlay";
 import {
   STORY_INTRO_VIDEO,
   STORY_INTRO_POSTER,
   HERO_IMAGE,
-  LIFE_SCENES,
-  UNIT_ELEVATION,
-  UNIT_SECTION,
-  UNIT_INTERIOR,
 } from "../constants/site";
 
 export function Story() {
@@ -95,6 +87,14 @@ export function Story() {
               <RevealOnView delay={1050} duration={450}>
                 <a
                   href="#video"
+                  onClick={(e) => {
+                    // HashRouter 가 #video 를 /video 라우트로 해석해 404 가 뜨는 문제 회피.
+                    // 같은 페이지 앵커 스크롤로만 동작시킨다.
+                    e.preventDefault();
+                    document
+                      .querySelector("#video")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
                   className="group inline-flex items-center gap-3 border border-ink bg-ink px-5 py-3 font-mono text-[11px] tracking-[0.25em] text-paper shadow-sm transition-colors hover:bg-accent hover:border-accent md:gap-4 md:px-6 md:py-3.5 md:text-[12px]"
                 >
                   <span>다음 — INTRO FILM</span>
@@ -250,106 +250,77 @@ export function Story() {
 
       {/* 04 VOID ───────────────────────────────────── */}
       <Section
-        id="void"
-        tag="SCENE 04 — VOID"
+        id="unit-design"
+        tag="SCENE 04 — UNIT DESIGN"
         title={
           <>
-            비움, <span className="text-accent">3단계</span>로<br className="md:block" />
-            번지는 면적
+            <span className="text-accent">두께</span>를<br className="md:block" />
+            생활로 바꾸기
           </>
         }
-        subtitle="방 · 골목 · 마을. 스케일을 옮기며 비움이 만드는 관계의 가능성."
+        subtitle="두꺼운 벽은 단순히 공간을 나누는 경계가 아니다. 그 안을 비워내면 사람과 사물이 머무는 작은 장소가 되고, 벽의 두께는 하나의 생활 단위가 된다."
       >
-        {/* Magnetic field — 12개 노드가 마우스에 따라 밀고 끌리며 가까워지면 점선으로 연결 */}
-        <div className="mb-6 md:mb-8">
-          <MagneticField cols={4} rows={3} width={1200} height={420} />
-          <p className="mt-3 font-mono text-[10px] tracking-[0.22em] text-mute">
-            ↳ 마우스를 가까이 가져가면 노드가 밀려나고, 멀어지면 천천히 끌려옵니다. 임계 거리 안에서는 점선이 잠시 맺힙니다.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-          {["방 · UNIT", "골목 · CIRCULATION", "마을 · PROGRAM"].map((label, i) => (
-            <Frame
-              key={label}
-              ratio="3/4"
-              label={`STAGE 0${i + 1}`}
-              index="SOON · 2026.10"
-            >
-              <div className="grid h-full w-full place-items-center bg-silver-100">
-                <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
-                  {label}
-                </span>
-              </div>
-            </Frame>
-          ))}
-        </div>
-        <Frame
-          ratio="16/9"
-          label="동선 다이어그램"
-          index="보유 자료"
-          className="mt-4 md:mt-6"
-        >
-          <div className="grid h-full w-full place-items-center bg-silver-100">
-            <span className="font-mono text-[10px] tracking-[0.3em] text-mute">
-              CIRCULATION DIAGRAM
-            </span>
-          </div>
-        </Frame>
-      </Section>
-
-      {/* 05 LIFE BEYOND THE ROOM ───────────────────────────────────── */}
-      <Section
-        id="life"
-        tag="SCENE 05 — LIFE BEYOND THE ROOM"
-        title={
-          <>
-            방 너머의 삶,<br className="md:block" />
-            <span className="text-accent">위치마다 다른 풍경</span>
-          </>
-        }
-        subtitle="좌우로 스와이프하거나 화살표로 네 개의 장면을 차례로 만나보세요."
-      >
-        <SwipeGallery
-          ratio="3/2"
-          slides={LIFE_SCENES.map((s, i) => ({
-            id: s.id,
-            src: s.src,
-            title: s.title || `SCENE 0${i + 1}`,
-            caption: s.caption,
-          }))}
-        />
-      </Section>
-
-      {/* 06 UNIT ───────────────────────────────────── */}
-      <Section
-        id="unit"
-        tag="SCENE 06 — UNIT"
-        title={
-          <>
-            가장 안쪽,<br className="md:block" />
-            <span className="text-accent">한 방의 단면</span>
-          </>
-        }
-        subtitle="입면 · 단면 · 내부 렌더. 이미지 클릭 시 확대해서 볼 수 있습니다."
-      >
-        {/* Tracing overlay — 네 개 방 카드 클릭 시 트레이싱지 한 장씩 누적되며 동선 곡선이 드러남 */}
-        <div className="mb-8 md:mb-12">
-          <TracingOverlay maxStack={3} />
-          <p className="mt-3 font-mono text-[10px] tracking-[0.22em] text-mute">
-            ↳ 닫힌 방 카드를 클릭하면 트레이싱지가 위에서 한 장씩 쌓이며 방 사이의 공유 공간이 곡선으로 드러납니다.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
-          <div className="md:col-span-8">
-            <Lightbox src={UNIT_ELEVATION} label="입면도" ratio="16/9" />
-          </div>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-10">
+          {/* 좌측 본문 — 두께 → 거리 조절 장치 */}
           <div className="md:col-span-4">
-            <Lightbox src={UNIT_SECTION} label="단면도" ratio="3/4" />
+            <p className="text-sm leading-relaxed text-ink-soft md:text-base">
+              사이집은 기존 구조체와 새로 삽입된 벽 사이의 간격을 버려진 틈으로
+              두지 않는다. 그 사이에는 창가, 수납, 책상, 벤치, 알코브가 들어가며
+              작은 유닛의 생활을 보완한다.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-ink-soft md:mt-6 md:text-base">
+              벽은 더 이상 안과 밖을 가르는 선이 아니라, 혼자 머무는 방과 함께
+              쓰는 공간 사이의 <span className="text-accent">거리를 조절</span>하는
+              장치가 된다.
+            </p>
+            {/* 4 step 인덱스 — 우측 4 isometric 과 매칭 */}
+            <ol className="mt-8 grid grid-cols-1 gap-3 md:mt-10">
+              {[
+                { n: "01", title: "벽 — 단순한 경계" },
+                { n: "02", title: "두께 안에 비움 — 알코브" },
+                { n: "03", title: "사람이 머문다" },
+                { n: "04", title: "생활 단위가 된다" },
+              ].map(({ n, title }) => (
+                <li
+                  key={n}
+                  className="flex gap-3 text-xs leading-relaxed text-ink-soft md:text-sm"
+                >
+                  <span className="font-mono text-[10px] tracking-[0.22em] text-accent md:text-[11px]">
+                    {n}
+                  </span>
+                  <span>{title}</span>
+                </li>
+              ))}
+            </ol>
           </div>
-          <div className="md:col-span-12">
-            <Lightbox src={UNIT_INTERIOR} label="내부 렌더" ratio="3/2" />
+
+          {/* 우측 4 isometric drawings — 가로 grid 4컬럼. 이미지는
+              public/media/unit-design-steps.png (사용자가 잘라낸 4-step 가로
+              strip 또는 4 개 분리 PNG). 아직 없을 때는 placeholder. */}
+          <div className="md:col-span-8">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+              {["01", "02", "03", "04"].map((n) => (
+                <figure
+                  key={n}
+                  className="relative aspect-[3/4]"
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}media/unit-${n}.png`}
+                    alt={`Unit design step ${n}`}
+                    className="absolute inset-0 h-full w-full object-contain"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                  <figcaption className="pointer-events-none absolute left-0 top-0 font-mono text-[9px] tracking-[0.22em] text-mute md:text-[10px]">
+                    {n}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className="mt-3 font-mono text-[10px] tracking-[0.22em] text-mute">
+              ↳ 벽 두께 안의 비움 — 단순 경계 → 알코브 → 사람 → 생활 단위
+            </p>
           </div>
         </div>
       </Section>
