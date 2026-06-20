@@ -189,31 +189,15 @@ export function Story() {
       <section className="relative mx-auto max-w-[1440px] px-4 pb-16 md:px-10 md:pb-24">
         <RevealOnView delay={0} duration={500}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6 mt-12 md:mt-20">
-          {/* Photo + plan */}
-          <Frame
-            ratio="4/3"
-            label="기존 홈플러스"
-            index="사진"
-            className="md:col-span-7"
-          >
-            <div className="grid h-full w-full place-items-center bg-silver-100">
-              <span className="font-mono text-[10px] tracking-[0.3em] text-mute">
-                현장 사진 슬롯
-              </span>
+          {/* 기존 홈플러스 평면도 — B1 / 1F / 2F */}
+          <div className="md:col-span-12">
+            <p className="rule-dim mb-3">기존 홈플러스 평면도 · 2000 ~ 2025</p>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/b1.jpg`} label="지하 1층" ratio="4/3" />
+              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/1f.jpg`} label="지상 1층" ratio="4/3" />
+              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/2f.jpg`} label="지상 2층" ratio="4/3" />
             </div>
-          </Frame>
-          <Frame
-            ratio="3/4"
-            label="기존 홈플러스"
-            index="도면"
-            className="md:col-span-5"
-          >
-            <div className="grid h-full w-full place-items-center bg-silver-100">
-              <span className="font-mono text-[10px] tracking-[0.3em] text-mute">
-                도면 슬롯
-              </span>
-            </div>
-          </Frame>
+          </div>
 
           {/* Naver Map */}
           <div className="md:col-span-12">
