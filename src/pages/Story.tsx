@@ -1,5 +1,6 @@
 import { Frame } from "../components/Frame";
 import { HeroFortune } from "../components/HeroFortune";
+import { RevealOnView } from "../components/RevealOnView";
 import { SaiLogo } from "../components/SaiLogo";
 import { VideoPlayer } from "../components/VideoPlayer";
 import { NaverMap } from "../components/NaverMap";
@@ -28,13 +29,13 @@ export function Story() {
       <section id="hero" className="relative w-full bg-white">
         <div className="relative z-10 mx-auto flex max-w-[1440px] flex-col px-4 pb-16 pt-16 md:px-10 md:pb-20 md:pt-24">
           <div>
-            <p className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
+            <RevealOnView as="p" delay={0} duration={400} className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
               <SaiLogo className="h-[10px] w-auto" />
               SCENE 00 — INTRO
-            </p>
+            </RevealOnView>
 
             {/* Architectural plate — clean photo, no chips, no caption */}
-            <figure className="mt-5 md:mt-8">
+            <RevealOnView as="figure" delay={180} duration={650} className="mt-5 md:mt-8">
               <div className="relative aspect-[16/9] max-w-[960px] overflow-hidden border border-line bg-white">
                 {HERO_IMAGE ? (
                   <img
@@ -50,27 +51,34 @@ export function Story() {
                   </div>
                 )}
               </div>
-            </figure>
+            </RevealOnView>
           </div>
 
           <div className="mt-10 md:mt-14">
-            <h1 className="block">
-              <HeroFortune />
-            </h1>
-            <p className="mt-5 max-w-xl text-xl font-medium leading-[1.3] tracking-tight md:mt-7 md:text-4xl">
-              독립은 있되, <span className="text-accent">고립은 없다</span>
-            </p>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
-              옛 홈플러스 가양점 자리, 비움을 사이에 둔 다섯 슬래브의 집.
-            </p>
-
-            <a
-              href="#video"
-              className="group mt-8 inline-flex items-center gap-3 border border-ink bg-ink px-5 py-3 font-mono text-[11px] tracking-[0.25em] text-paper transition-colors hover:bg-accent hover:border-accent md:gap-4 md:px-6 md:py-3.5 md:text-[12px]"
-            >
-              <span>다음 — INTRO FILM</span>
-              <span aria-hidden className="transition-transform group-hover:translate-y-0.5">↓</span>
-            </a>
+            <RevealOnView delay={450} duration={550}>
+              <h1 className="block">
+                <HeroFortune />
+              </h1>
+            </RevealOnView>
+            <RevealOnView delay={650} duration={500}>
+              <p className="mt-5 max-w-xl text-xl font-medium leading-[1.3] tracking-tight md:mt-7 md:text-4xl">
+                독립은 있되, <span className="text-accent">고립은 없다</span>
+              </p>
+            </RevealOnView>
+            <RevealOnView delay={800} duration={450}>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
+                옛 홈플러스 가양점 자리, 비움을 사이에 둔 다섯 슬래브의 집.
+              </p>
+            </RevealOnView>
+            <RevealOnView delay={950} duration={450}>
+              <a
+                href="#video"
+                className="group mt-8 inline-flex items-center gap-3 border border-ink bg-ink px-5 py-3 font-mono text-[11px] tracking-[0.25em] text-paper transition-colors hover:bg-accent hover:border-accent md:gap-4 md:px-6 md:py-3.5 md:text-[12px]"
+              >
+                <span>다음 — INTRO FILM</span>
+                <span aria-hidden className="transition-transform group-hover:translate-y-0.5">↓</span>
+              </a>
+            </RevealOnView>
           </div>
         </div>
       </section>
@@ -81,17 +89,21 @@ export function Story() {
         className="relative mx-auto max-w-[1440px] scroll-mt-16 overflow-hidden border-t border-line/60 px-4 py-16 md:px-10 md:py-24"
       >
         <header className="mb-8 md:mb-12">
-          <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
+          <RevealOnView as="p" delay={0} duration={400} className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
             <SaiLogo className="h-[10px] w-auto" />
             SCENE 00.5 — SLOGAN AS PLAN
-          </p>
-          <h2 className="text-[7vw] font-extrabold leading-[1.15] tracking-[-0.03em] md:text-[clamp(2rem,4vw,3.5rem)]">
-            슬로건은 평면이 아니라 단면이다.
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
-            14개의 글자는 각자 하중을 나눠 진 기둥, 그 사이 여백은 함께 쓰는 공간. 자간이 좁혀지면
-            글자 아래로 작은 평면도 한 장이 떠오릅니다.
-          </p>
+          </RevealOnView>
+          <RevealOnView delay={80} duration={500}>
+            <h2 className="text-[7vw] font-extrabold leading-[1.15] tracking-[-0.03em] md:text-[clamp(2rem,4vw,3.5rem)]">
+              슬로건은 평면이 아니라 단면이다.
+            </h2>
+          </RevealOnView>
+          <RevealOnView delay={160} duration={450}>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
+              14개의 글자는 각자 하중을 나눠 진 기둥, 그 사이 여백은 함께 쓰는 공간. 자간이 좁혀지면
+              글자 아래로 작은 평면도 한 장이 떠오릅니다.
+            </p>
+          </RevealOnView>
         </header>
         <SloganKerning planImage={`${import.meta.env.BASE_URL}slogan-plan-placeholder.png`} />
       </section>
@@ -348,20 +360,24 @@ function Section({
       className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 py-16 md:px-10 md:py-24"
     >
       <header className="mb-8 md:mb-12">
-        <p className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
-        <SaiLogo className="h-[10px] w-auto" />
-        {tag}
-      </p>
-        <h2 className="text-[8vw] font-extrabold leading-[1.15] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
-          {title}
-        </h2>
+        <RevealOnView as="p" delay={0} duration={400} className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
+          <SaiLogo className="h-[10px] w-auto" />
+          {tag}
+        </RevealOnView>
+        <RevealOnView delay={80} duration={500}>
+          <h2 className="text-[8vw] font-extrabold leading-[1.15] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
+            {title}
+          </h2>
+        </RevealOnView>
         {subtitle && (
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
-            {subtitle}
-          </p>
+          <RevealOnView delay={160} duration={450}>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
+              {subtitle}
+            </p>
+          </RevealOnView>
         )}
       </header>
-      {children}
+      <RevealOnView delay={200} duration={500}>{children}</RevealOnView>
     </section>
   );
 }

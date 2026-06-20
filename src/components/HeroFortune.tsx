@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { FORTUNES, type Fortune } from "../constants/fortunes";
 import { SaiLogo } from "./SaiLogo";
@@ -46,15 +47,16 @@ export function HeroFortune() {
       pickNew();
       setBodyVisible(true);
       setIsOpen(true);
+      // Modal now covers center; collapse the split silently behind the backdrop
+      // so the logo returns to whole shape while the dialog is up (avoids the
+      // logo halves hanging awkwardly beside the modal on wide viewports).
+      setIsSplit(false);
     }, reducedMotion ? 0 : 240);
   }, [pickNew, reducedMotion]);
 
   const closeModal = useCallback(() => {
     setIsOpen(false);
-    window.setTimeout(() => {
-      setIsSplit(false);
-      setIsBack(false);
-    }, reducedMotion ? 0 : 280);
+    window.setTimeout(() => setIsBack(false), reducedMotion ? 0 : 280);
   }, [reducedMotion]);
 
   const reroll = useCallback(() => {
@@ -204,7 +206,10 @@ export function HeroFortune() {
         .hf-trigger.is-split .hf-right { transform: translateX(8%); }
       `}</style>
 
-      {/* Modal */}
+      {/* Modal — portaled to <body> so that ancestor `transform`s (RevealOnView,
+          framer-motion, etc.) don't trap our `fixed inset-0` backdrop inside a
+          containing block smaller than the viewport. */}
+      {createPortal(
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -412,7 +417,9 @@ export function HeroFortune() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body,
+      )}
     </>
   );
 }
