@@ -8,7 +8,6 @@ import { LayerStack } from "../components/LayerStack";
 import { SwipeGallery } from "../components/SwipeGallery";
 import { Lightbox } from "../components/Lightbox";
 import { StreetviewTimeline } from "../components/StreetviewTimeline";
-import { SloganKerning } from "../components/effects/SloganKerning";
 import { MagneticField } from "../components/effects/MagneticField";
 import { TracingOverlay } from "../components/effects/TracingOverlay";
 import {
@@ -109,31 +108,6 @@ export function Story() {
         </div>
       </section>
 
-      {/* 00.5 SLOGAN KERNING — 자간이 좁혀지며 평면도 reveal ───── */}
-      <section
-        id="slogan"
-        className="relative mx-auto max-w-[1440px] scroll-mt-16 overflow-hidden border-t border-line/60 px-4 py-16 md:px-10 md:py-24"
-      >
-        <header className="mb-8 md:mb-12">
-          <RevealOnView as="p" delay={0} duration={400} className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
-            <SaiLogo className="h-[10px] w-auto" />
-            SCENE 00.5 — SLOGAN AS PLAN
-          </RevealOnView>
-          <RevealOnView delay={80} duration={500}>
-            <h2 className="text-[7vw] font-extrabold leading-[1.15] tracking-[-0.03em] md:text-[clamp(2rem,4vw,3.5rem)]">
-              슬로건은 평면이 아니라 단면이다.
-            </h2>
-          </RevealOnView>
-          <RevealOnView delay={160} duration={450}>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
-              14개의 글자는 각자 하중을 나눠 진 기둥, 그 사이 여백은 함께 쓰는 공간. 자간이 좁혀지면
-              글자 아래로 작은 평면도 한 장이 떠오릅니다.
-            </p>
-          </RevealOnView>
-        </header>
-        <SloganKerning planImage={`${import.meta.env.BASE_URL}slogan-plan-placeholder.png`} />
-      </section>
-
       {/* 01 INTRO VIDEO ───────────────────────────────────── */}
       <Section id="video" tag="SCENE 01 — INTRO FILM" title="영상으로 먼저 만나기">
         <VideoPlayer
@@ -146,10 +120,75 @@ export function Story() {
         </p>
       </Section>
 
-      {/* 02 WHY ───────────────────────────────────── */}
+      {/* 02 SITE ───────────────────────────────────── */}
+      {/* SCENE 02 header — separate section so the panorama below can use
+          position: sticky without being trapped under a transformed ancestor.
+          narrative: SITE 가 먼저 — 사라지는 자리를 본 뒤에 WHY (설계 근거) 로 흐름. */}
+      <section
+        id="site"
+        className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 pt-16 md:px-10 md:pt-24"
+      >
+        <header className="mb-0">
+          <RevealOnView as="p" delay={0} duration={400} className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
+            <SaiLogo className="h-[10px] w-auto" />
+            SCENE 02 — SITE
+          </RevealOnView>
+          <RevealOnView delay={80} duration={500}>
+            <h2 className="text-[8vw] font-extrabold leading-[1.15] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
+              상업이 대신한 공공성,<br className="md:block" />
+              <span className="text-accent">사라지는 자리</span>
+            </h2>
+          </RevealOnView>
+          <RevealOnView delay={160} duration={450}>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
+              2025.12.28 홈플러스 가양점 폐점. 25년간 동네의 부엌·갤러리·운동장이 한꺼번에 사라졌다.
+            </p>
+          </RevealOnView>
+        </header>
+      </section>
+
+      {/* Streetview panorama — 가양 15년의 가로 흐름. Full-bleed, scroll-pinned. */}
+      <div className="mt-10 md:mt-14">
+        <StreetviewTimeline />
+      </div>
+
+      {/* SCENE 02 body — photos, map, layers */}
+      <section className="relative mx-auto max-w-[1440px] px-4 pb-16 md:px-10 md:pb-24">
+        <RevealOnView delay={0} duration={500}>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6 mt-12 md:mt-20">
+          {/* 기존 홈플러스 평면도 — B1 / 1F / 2F */}
+          <div className="md:col-span-12">
+            <p className="rule-dim mb-3">기존 홈플러스 평면도 · 2000 ~ 2025</p>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/b1.jpg`} label="지하 1층" ratio="4/3" />
+              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/1f.jpg`} label="지상 1층" ratio="4/3" />
+              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/2f.jpg`} label="지상 2층" ratio="4/3" />
+            </div>
+          </div>
+
+          {/* Naver Map */}
+          <div className="md:col-span-12">
+            <p className="rule-dim mb-3">대지 위치</p>
+            <NaverMap ratio="16/9" zoom={16} />
+          </div>
+
+          {/* Layer toggle: 철거 / 보존 / 신설 */}
+          <div className="md:col-span-12">
+            <p className="rule-dim mb-3">철거 · 보존 · 신설</p>
+            <LayerStack ratio="16/9" layers={SITE_LAYERS} />
+            <p className="mt-2 font-mono text-[10px] tracking-[0.2em] text-mute">
+              ↳ 각 레이어를 켜고/끄거나 ONLY 로 하나만 보세요 · 자료 SOON · 2026.10
+            </p>
+          </div>
+        </div>
+        </RevealOnView>
+      </section>
+
+      {/* 03 WHY ───────────────────────────────────── */}
+      {/* narrative: SITE 의 사라짐을 본 뒤, 설계가 응답하는 'WHY' — 비움이 답이다. */}
       <Section
         id="why"
-        tag="SCENE 02 — WHY"
+        tag="SCENE 03 — WHY"
         title={
           <>
             먹고자는 것 이상의{" "}
@@ -185,69 +224,6 @@ export function Story() {
         {/* footnotes hidden until real sources arrive — keep array empty */}
         <Footnotes items={[]} />
       </Section>
-
-      {/* 03 SITE ───────────────────────────────────── */}
-      {/* SCENE 03 header — separate section so the panorama below can use
-          position: sticky without being trapped under a transformed ancestor. */}
-      <section
-        id="site"
-        className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 pt-16 md:px-10 md:pt-24"
-      >
-        <header className="mb-0">
-          <RevealOnView as="p" delay={0} duration={400} className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
-            <SaiLogo className="h-[10px] w-auto" />
-            SCENE 03 — SITE
-          </RevealOnView>
-          <RevealOnView delay={80} duration={500}>
-            <h2 className="text-[8vw] font-extrabold leading-[1.15] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
-              상업이 대신한 공공성,<br className="md:block" />
-              <span className="text-accent">사라지는 자리</span>
-            </h2>
-          </RevealOnView>
-          <RevealOnView delay={160} duration={450}>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft md:mt-4 md:text-base">
-              2025.10.30 홈플러스 가양점 폐점. 25년간 동네의 부엌·갤러리·운동장이 한꺼번에 사라졌다.
-            </p>
-          </RevealOnView>
-        </header>
-      </section>
-
-      {/* Streetview panorama — 가양 15년의 가로 흐름. Full-bleed, scroll-pinned. */}
-      <div className="mt-10 md:mt-14">
-        <StreetviewTimeline />
-      </div>
-
-      {/* SCENE 03 body — photos, map, layers */}
-      <section className="relative mx-auto max-w-[1440px] px-4 pb-16 md:px-10 md:pb-24">
-        <RevealOnView delay={0} duration={500}>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6 mt-12 md:mt-20">
-          {/* 기존 홈플러스 평면도 — B1 / 1F / 2F */}
-          <div className="md:col-span-12">
-            <p className="rule-dim mb-3">기존 홈플러스 평면도 · 2000 ~ 2025</p>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/b1.jpg`} label="지하 1층" ratio="4/3" />
-              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/1f.jpg`} label="지상 1층" ratio="4/3" />
-              <Lightbox src={`${import.meta.env.BASE_URL}floorplans/2f.jpg`} label="지상 2층" ratio="4/3" />
-            </div>
-          </div>
-
-          {/* Naver Map */}
-          <div className="md:col-span-12">
-            <p className="rule-dim mb-3">대지 위치</p>
-            <NaverMap ratio="16/9" zoom={16} />
-          </div>
-
-          {/* Layer toggle: 철거 / 보존 / 신설 */}
-          <div className="md:col-span-12">
-            <p className="rule-dim mb-3">철거 · 보존 · 신설</p>
-            <LayerStack ratio="16/9" layers={SITE_LAYERS} />
-            <p className="mt-2 font-mono text-[10px] tracking-[0.2em] text-mute">
-              ↳ 각 레이어를 켜고/끄거나 ONLY 로 하나만 보세요 · 자료 SOON · 2026.10
-            </p>
-          </div>
-        </div>
-        </RevealOnView>
-      </section>
 
       {/* 04 VOID ───────────────────────────────────── */}
       <Section

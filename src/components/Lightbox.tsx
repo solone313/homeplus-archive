@@ -8,8 +8,9 @@ type Props = {
 };
 
 /**
- * Clickable image that opens a fullscreen overlay. Wheel zoom + drag pan +
+ * Clickable image that opens a fullscreen overlay. Click-toggle zoom + drag pan +
  * ESC/click-outside to close. Falls back to placeholder if no src.
+ * (Wheel zoom 은 page scroll 과 충돌해서 의도적으로 제외 — 클릭/키보드로만 확대.)
  */
 export function Lightbox({ src, alt, label, ratio = "16/9" }: Props) {
   const [open, setOpen] = useState(false);
@@ -85,10 +86,6 @@ export function Lightbox({ src, alt, label, ratio = "16/9" }: Props) {
           onClick={(e) => {
             if (e.target === e.currentTarget) setOpen(false);
           }}
-          onWheel={(e) => {
-            const delta = -e.deltaY * 0.002;
-            setZoom((z) => Math.min(5, Math.max(1, z + delta)));
-          }}
           onPointerDown={(e) => {
             if (zoom > 1) setDragging(true);
             (e.target as Element).setPointerCapture?.(e.pointerId);
@@ -125,7 +122,7 @@ export function Lightbox({ src, alt, label, ratio = "16/9" }: Props) {
             <span>{Math.round(zoom * 100)}%</span>
           </div>
           <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center font-mono text-[10px] tracking-[0.25em] text-paper/60">
-            ESC 닫기 · 휠 확대 · 드래그 이동 · 0 리셋
+            ESC 닫기 · 클릭 확대 · 드래그 이동 · 0 리셋
           </div>
           <button
             onClick={() => setOpen(false)}

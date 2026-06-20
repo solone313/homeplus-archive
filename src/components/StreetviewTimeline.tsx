@@ -134,16 +134,6 @@ export function StreetviewTimeline() {
                         filter: `saturate(${sat}) brightness(${brt})`,
                       }}
                     />
-                    {/* figcaption — 사진 우하단, year + context 작게 */}
-                    <figcaption
-                      className="pointer-events-none absolute bottom-2 right-2 flex items-baseline gap-2 bg-ink/55 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-paper/75 md:bottom-3 md:right-3 md:text-[10px]"
-                    >
-                      <span className="text-paper">{f.year}</span>
-                      <span className="text-paper/55">/</span>
-                      <span className="text-paper/65 normal-case tracking-[0.05em]">
-                        {f.context}
-                      </span>
-                    </figcaption>
                   </figure>
                 </div>
               );
