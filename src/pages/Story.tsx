@@ -188,28 +188,61 @@ export function Story() {
         }
         subtitle="국토부 최저주거기준 1인 14m². 잠자고 먹고 씻는 것만 겨우 가능한 면적. 비움은 면적을 포기하는 것이 아니라, 주어진 면적이 주거로서 기능하도록 하는 수단이다."
       >
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-          {[
-            { n: 1, metric: "1인 가구 가구당 면적 추이 (2000-2025)" },
-            { n: 2, metric: "14m² 행위면적 분배" },
-            { n: 3, metric: "사회적 관계 활성화 지표" },
-          ].map(({ n, metric }) => (
-            <Frame
-              key={n}
-              ratio="3/2"
-              label={`DIAG 0${n} · ${metric}`}
-              index="SOON · 2026.10"
-            >
-              <div
-                className="grid h-full w-full place-items-center bg-silver-100"
-                style={{ minHeight: "8rem" }}
-              >
-                <span className="font-mono text-[10px] tracking-[0.3em] text-mute">
-                  통계·다이어그램 슬롯
-                </span>
-              </div>
-            </Frame>
-          ))}
+        {/* Mass Diagram — 두꺼운 마트에 사이를 내다 */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
+          {/* 좌측: 헤드라인 + 설명 + 7 step 라벨 */}
+          <div className="md:col-span-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
+              MASS DIAGRAM
+            </p>
+            <h3 className="mt-3 text-3xl font-extrabold leading-[1.15] tracking-[-0.025em] md:text-4xl">
+              두꺼운 마트에<br />
+              <span className="text-accent">사이</span>를 내다
+            </h3>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
+              기존 구조 그리드는 남기고 깊고 닫힌 마트의 몸체를 비운다. 그 사이로
+              빛과 바람, 동선과 공유생활이 스며들며 하나의 큰 상자는 여러 겹의 집
+              으로 전환된다.
+            </p>
+            {/* 7 step 라벨 — 영상이 돌면서 한 화면에 모두 노출 */}
+            <ol className="mt-6 grid grid-cols-1 gap-3 md:mt-8">
+              {[
+                { n: "01", title: "기존 홈플러스의 깊은 상자형 매스" },
+                { n: "02", title: "주거 채광을 위한 매스 분절" },
+                { n: "03", title: "자연환기를 위한 중앙부 비움" },
+                { n: "04", title: "안뜰 채광을 위한 매스 깊이 조정" },
+                { n: "05", title: "도시 연결과 서비스 분리를 위한 동선 재배치" },
+                { n: "06", title: "안뜰 스케일 조절을 위한 브릿지 배치" },
+                { n: "07", title: "주거 밀도 보완을 위한 수직 증축" },
+              ].map(({ n, title }) => (
+                <li key={n} className="flex gap-3 text-xs leading-relaxed text-ink-soft md:text-sm">
+                  <span className="font-mono text-[10px] tracking-[0.22em] text-accent md:text-[11px]">
+                    {n}
+                  </span>
+                  <span>{title}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* 우측: MP4 자동재생 + 반복. viewport 진입 시 .play() · 벗어나면 .pause() */}
+          <div className="md:col-span-8">
+            <div className="relative w-full overflow-hidden border border-line bg-paper-soft">
+              <video
+                src={`${import.meta.env.BASE_URL}media/mass-transform.mp4`}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="block h-auto w-full"
+                aria-label="매스 변형 7-step 다이어그램"
+              />
+            </div>
+            <p className="mt-2 font-mono text-[10px] tracking-[0.22em] text-mute">
+              ↳ 좌측 7 step 을 영상이 순서대로 보여줍니다
+            </p>
+          </div>
         </div>
         {/* footnotes hidden until real sources arrive — keep array empty */}
         <Footnotes items={[]} />
