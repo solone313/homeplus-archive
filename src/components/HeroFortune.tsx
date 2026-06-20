@@ -28,6 +28,7 @@ export function HeroFortune() {
   const [bodyVisible, setBodyVisible] = useState(true);
   const lastIdxRef = useRef<number>(-1);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const justOpenedRef = useRef(false);
   // prefers-reduced-motion 을 의도적으로 무시 (졸업작품 사이트는 애니메이션이 콘텐츠).
   // 호환을 위해 상태/리터럴은 유지하되 항상 false.
   const reducedMotion = false;
@@ -47,16 +48,20 @@ export function HeroFortune() {
       pickNew();
       setBodyVisible(true);
       setIsOpen(true);
-      // Modal now covers center; collapse the split silently behind the backdrop
-      // so the logo returns to whole shape while the dialog is up (avoids the
-      // logo halves hanging awkwardly beside the modal on wide viewports).
-      setIsSplit(false);
+      justOpenedRef.current = true;
+      window.setTimeout(() => {
+        justOpenedRef.current = false;
+      }, 400);
     }, reducedMotion ? 0 : 240);
   }, [pickNew, reducedMotion]);
 
   const closeModal = useCallback(() => {
+    if (justOpenedRef.current) return;
     setIsOpen(false);
-    window.setTimeout(() => setIsBack(false), reducedMotion ? 0 : 280);
+    window.setTimeout(() => {
+      setIsBack(false);
+      setIsSplit(false);
+    }, reducedMotion ? 0 : 280);
   }, [reducedMotion]);
 
   const reroll = useCallback(() => {
@@ -167,7 +172,7 @@ export function HeroFortune() {
               whiteSpace: "nowrap",
             }}
           >
-            marginalia · 한 마디
+            ↗ MARGINALIA · 한 마디 꺼내기
           </span>
         </div>
       </div>
@@ -191,11 +196,29 @@ export function HeroFortune() {
           opacity: 0;
         }
 
-        /* Caption — very quiet by default, brighter on hover */
-        .hf-caption { opacity: 0.4; }
+        /* Caption — calm by default, brighter on hover */
+        .hf-caption { opacity: 0.6; }
         .hf-wrapper:hover .hf-caption,
-        .hf-wrapper:focus-within .hf-caption { opacity: 0.9; }
+        .hf-wrapper:focus-within .hf-caption { opacity: 1; }
         .hf-wrapper.is-split .hf-caption { opacity: 0; }
+
+        /* Dashed accent border around the bar area — appears on hover */
+        .hf-trigger::after {
+          content: "";
+          position: absolute;
+          left: 36%;
+          right: 36%;
+          top: 4%;
+          bottom: 4%;
+          border: 1px dashed transparent;
+          pointer-events: none;
+          transition: border-color 220ms ease;
+        }
+        .hf-wrapper:hover .hf-trigger::after,
+        .hf-wrapper:focus-within .hf-trigger::after {
+          border-color: rgba(236, 72, 153, 0.45);
+        }
+        .hf-wrapper.is-split .hf-trigger::after { border-color: transparent; }
 
         /* Left + right halves — swing apart on click */
         .hf-left, .hf-right {
@@ -219,7 +242,9 @@ export function HeroFortune() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reducedMotion ? 0 : 0.18, ease: "easeOut" }}
-            onClick={closeModal}
+            onPointerDown={(e) => {
+              if (e.target === e.currentTarget) closeModal();
+            }}
           >
             <motion.div
               role="dialog"

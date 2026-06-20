@@ -7,6 +7,7 @@ import { NaverMap } from "../components/NaverMap";
 import { LayerStack } from "../components/LayerStack";
 import { SwipeGallery } from "../components/SwipeGallery";
 import { Lightbox } from "../components/Lightbox";
+import { StreetviewTimeline } from "../components/StreetviewTimeline";
 import { SloganKerning } from "../components/effects/SloganKerning";
 import { MagneticField } from "../components/effects/MagneticField";
 import { TracingOverlay } from "../components/effects/TracingOverlay";
@@ -165,6 +166,11 @@ export function Story() {
         }
         subtitle="2025.10.30 홈플러스 가양점 폐점. 25년간 동네의 부엌·갤러리·운동장이 한꺼번에 사라졌다."
       >
+        {/* Streetview timeline — 25년의 채도 감쇠 */}
+        <div className="mb-10 md:mb-14">
+          <StreetviewTimeline />
+        </div>
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
           {/* Photo + plan */}
           <Frame

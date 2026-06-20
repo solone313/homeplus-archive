@@ -39,3 +39,21 @@ export const SITE_LAYERS: { id: "demolish" | "preserve" | "new"; label: string; 
 export const UNIT_ELEVATION = "";
 export const UNIT_SECTION = "";
 export const UNIT_INTERIOR = "";
+
+// STREETVIEW TIMELINE — 가양 홈플러스 25년의 퇴색
+// 사진은 /public/streetview/{year}.jpg 에 떨어뜨리면 자동 연결.
+// 이미지가 없으면 컴포넌트가 placeholder 슬롯으로 표시.
+export type StreetviewFrame = {
+  year: number;
+  src: string;
+  /** 한 줄 컨텍스트 — 프레임 아래 캡션 */
+  context: string;
+};
+
+export const STREETVIEW_FRAMES: StreetviewFrame[] = [
+  { year: 2010, src: `${import.meta.env.BASE_URL}streetview/2010.jpg`, context: "개장 직후" },
+  { year: 2014, src: `${import.meta.env.BASE_URL}streetview/2014.jpg`, context: "정점" },
+  { year: 2018, src: `${import.meta.env.BASE_URL}streetview/2018.jpg`, context: "변화의 시작" },
+  { year: 2022, src: `${import.meta.env.BASE_URL}streetview/2022.jpg`, context: "정체" },
+  { year: 2025, src: `${import.meta.env.BASE_URL}streetview/2025.jpg`, context: "폐점 · 2025.10" },
+];
