@@ -10,6 +10,9 @@ export function Drawings() {
       subtitle="평면 · 입면 · 단면 · 모형. 자료가 정리되면 카테고리별로 펼쳐집니다. 우선은 통합 PDF 한 권으로 둡니다."
     >
       <section className="mx-auto max-w-[1440px] px-4 pt-8 md:px-10 md:pt-12">
+        <p className="mb-4 font-mono text-[10px] tracking-[0.22em] text-mute md:mb-6">
+          DRAWING SET · A2 · 2026 — SOON · 2026.10
+        </p>
         <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-4 md:mx-0 md:px-0">
           {["전체 PDF", "평면도", "입면도", "단면도", "디테일"].map((t, i) => (
             <button
@@ -23,7 +26,7 @@ export function Drawings() {
             >
               {t}
               {i !== 0 && (
-                <span className="ml-2 text-[9px] opacity-60">SOON</span>
+                <span className="ml-2 text-[9px] opacity-60">SOON · 2026.10</span>
               )}
             </button>
           ))}

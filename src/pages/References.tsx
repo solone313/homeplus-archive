@@ -76,7 +76,7 @@ function ReferenceItem({ entry, isLast }: ReferenceItemProps) {
             href={entry.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-1 inline-flex items-center gap-1 border border-line px-2 py-0.5 text-[10px] tracking-[0.2em] text-accent transition-colors hover:border-ink/40"
+            className="ml-1 inline-flex items-center gap-1 border border-ink/30 px-2 py-0.5 text-[10px] tracking-[0.2em] text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             LINK <span aria-hidden>↗</span>
           </a>

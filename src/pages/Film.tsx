@@ -10,6 +10,9 @@ export function Film() {
       subtitle="짧은 영상과 캡션. STORY 인트로 영상과는 다른, 별도의 작품 필름입니다."
     >
       <section className="mx-auto max-w-[1440px] px-4 pt-8 md:px-10 md:pt-12">
+        <p className="mb-4 font-mono text-[10px] tracking-[0.22em] text-mute md:mb-6">
+          1 reel · MP4 16:9 · 2026 — SOON · 2026.10
+        </p>
         <VideoPlayer
           src={FILM_VIDEO}
           poster={FILM_POSTER}
@@ -20,8 +23,8 @@ export function Film() {
         <div className="mt-8 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-12">
           <div className="md:col-span-7">
             <p className="rule-dim mb-3">CAPTION</p>
-            <div className="space-y-4 text-base leading-relaxed text-ink md:text-lg">
-              <p className="text-mute">캡션 텍스트 슬롯 — 6/10 도착 예정</p>
+            <div className="min-h-[10rem] space-y-4 text-base leading-relaxed text-ink md:min-h-[14rem] md:text-lg">
+              <p className="text-mute">CAPTION · SOON · 2026.10</p>
               <p className="text-mute">
                 도착 시 이 영역에 챕터 자막 또는 단락 텍스트로 채워집니다.
               </p>
@@ -31,7 +34,7 @@ export function Film() {
             <p className="rule-dim mb-3">META</p>
             <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 font-mono text-[11px] tracking-[0.15em]">
               <dt className="text-mute">DURATION</dt>
-              <dd>TBD</dd>
+              <dd>SOON · 2026.10</dd>
               <dt className="text-mute">FORMAT</dt>
               <dd>MP4 · 16:9</dd>
               <dt className="text-mute">CREDIT</dt>

@@ -35,22 +35,41 @@ export function Story() {
               SCENE 00 — INTRO
             </RevealOnView>
 
-            {/* Architectural plate — clean photo, no chips, no caption */}
+            {/* Architectural plate — clean photo + SCENE meta aside */}
             <RevealOnView as="figure" delay={180} duration={650} className="mt-5 md:mt-8">
-              <div className="relative aspect-[16/9] max-w-[960px] overflow-hidden border border-line bg-white">
-                {HERO_IMAGE ? (
-                  <img
-                    src={HERO_IMAGE}
-                    alt="사이집 가양"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ) : (
-                  <div className="silver-shimmer absolute inset-0 grid place-items-center">
-                    <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
-                      대표 이미지 슬롯 · 6/18 예정
-                    </span>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
+                <div className="md:col-span-8">
+                  <div className="relative aspect-[16/10] max-w-[860px] overflow-hidden border border-line bg-white">
+                    {HERO_IMAGE ? (
+                      <img
+                        src={HERO_IMAGE}
+                        alt="사이집 가양"
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="silver-shimmer absolute inset-0 grid place-items-center">
+                        <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
+                          대표 이미지 슬롯 · SOON · 2026.10
+                        </span>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
+                <aside className="md:col-span-4 flex flex-col justify-end gap-3 md:gap-4">
+                  <p className="font-mono text-[18px] leading-none tracking-[0.14em] text-ink md:text-[22px]">
+                    SAIJIP GAYANG
+                  </p>
+                  <p className="font-mono text-[11px] tracking-[0.22em] text-mute md:text-[12px]">
+                    GRADUATION DESIGN · 2026
+                  </p>
+                  <p className="font-mono text-[11px] tracking-[0.22em] text-mute md:text-[12px]">
+                    KIM JI SU
+                  </p>
+                  <hr className="border-0 border-t border-line my-1" />
+                  <p className="text-xs leading-relaxed text-ink-soft md:text-sm">
+                    독립은 있되, 고립은 없다
+                  </p>
+                </aside>
               </div>
             </RevealOnView>
           </div>
@@ -74,7 +93,7 @@ export function Story() {
             <RevealOnView delay={950} duration={450}>
               <a
                 href="#video"
-                className="group mt-8 inline-flex items-center gap-3 border border-ink bg-ink px-5 py-3 font-mono text-[11px] tracking-[0.25em] text-paper transition-colors hover:bg-accent hover:border-accent md:gap-4 md:px-6 md:py-3.5 md:text-[12px]"
+                className="group mt-8 inline-flex items-center gap-3 border border-ink bg-ink px-5 py-3 font-mono text-[11px] tracking-[0.25em] text-paper shadow-sm transition-colors hover:bg-accent hover:border-accent md:gap-4 md:px-6 md:py-3.5 md:text-[12px]"
               >
                 <span>다음 — INTRO FILM</span>
                 <span aria-hidden className="transition-transform group-hover:translate-y-0.5">↓</span>
@@ -135,14 +154,21 @@ export function Story() {
         subtitle="국토부 최저주거기준 1인 14sqm. 잠자고 먹고 씻는 것만 겨우 가능한 면적. 비움은 면적을 포기하는 것이 아니라, 주어진 면적이 주거로서 기능하도록 하는 수단이다."
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-          {[1, 2, 3].map((n) => (
+          {[
+            { n: 1, metric: "1인 가구 가구당 면적 추이 (2000-2025)" },
+            { n: 2, metric: "14sqm 행위면적 분배" },
+            { n: 3, metric: "사회적 관계 활성화 지표" },
+          ].map(({ n, metric }) => (
             <Frame
               key={n}
               ratio="3/2"
-              label={`DIAGRAM 0${n}`}
-              index="TBD"
+              label={`DIAG 0${n} · ${metric}`}
+              index="SOON · 2026.10"
             >
-              <div className="grid h-full w-full place-items-center bg-silver-100">
+              <div
+                className="grid h-full w-full place-items-center bg-silver-100"
+                style={{ minHeight: "8rem" }}
+              >
                 <span className="font-mono text-[10px] tracking-[0.3em] text-mute">
                   통계·다이어그램 슬롯
                 </span>
@@ -210,7 +236,7 @@ export function Story() {
             <p className="rule-dim mb-3">철거 · 보존 · 신설</p>
             <LayerStack ratio="16/9" layers={SITE_LAYERS} />
             <p className="mt-2 font-mono text-[10px] tracking-[0.2em] text-mute">
-              ↳ 각 레이어를 켜고/끄거나 ONLY 로 하나만 보세요 · 자료 6/14 예정
+              ↳ 각 레이어를 켜고/끄거나 ONLY 로 하나만 보세요 · 자료 SOON · 2026.10
             </p>
           </div>
         </div>
@@ -243,7 +269,7 @@ export function Story() {
               key={label}
               ratio="3/4"
               label={`STAGE 0${i + 1}`}
-              index="6/10 예정"
+              index="SOON · 2026.10"
             >
               <div className="grid h-full w-full place-items-center bg-silver-100">
                 <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
