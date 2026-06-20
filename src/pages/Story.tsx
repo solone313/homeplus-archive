@@ -35,70 +35,76 @@ export function Story() {
               SCENE 00 — INTRO
             </RevealOnView>
 
-            {/* Architectural plate — clean photo + SCENE meta aside */}
-            <RevealOnView as="figure" delay={180} duration={650} className="mt-5 md:mt-8">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
-                <div className="md:col-span-8">
-                  <div className="relative aspect-[16/10] max-w-[860px] overflow-hidden border border-line bg-white">
-                    {HERO_IMAGE ? (
-                      <img
-                        src={HERO_IMAGE}
-                        alt="사이집 가양"
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="silver-shimmer absolute inset-0 grid place-items-center">
-                        <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
-                          대표 이미지 슬롯 · SOON · 2026.10
-                        </span>
-                      </div>
-                    )}
-                  </div>
+            {/* Architectural plate — photo + 우상단 작은 메타 (좌측 SCENE label 의 짝).
+                메타는 도면적 anchor 두 자리 (좌 SCENE · 우 작품 신원) 만 잡고
+                wordmark / 슬로건은 하단으로 양보 — 정체성 자리 중복 해소. */}
+            <div className="mt-5 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-12 md:gap-8">
+              <RevealOnView as="figure" delay={180} duration={650} className="md:col-span-9">
+                <div className="relative aspect-[16/10] overflow-hidden border border-line bg-white">
+                  {HERO_IMAGE ? (
+                    <img
+                      src={HERO_IMAGE}
+                      alt="사이집 가양"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="silver-shimmer absolute inset-0 grid place-items-center">
+                      <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
+                        대표 이미지 슬롯 · SOON · 2026.10
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <aside className="md:col-span-4 flex flex-col justify-end gap-3 md:gap-4">
-                  <p className="font-mono text-[18px] leading-none tracking-[0.14em] text-ink md:text-[22px]">
-                    SAIJIP GAYANG
-                  </p>
-                  <p className="font-mono text-[11px] tracking-[0.22em] text-mute md:text-[12px]">
+              </RevealOnView>
+              <aside className="md:col-span-3 flex flex-col justify-end gap-2 md:gap-3">
+                <RevealOnView delay={320} duration={450} className="flex flex-col gap-2 md:gap-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
                     GRADUATION DESIGN · 2026
                   </p>
-                  <p className="font-mono text-[11px] tracking-[0.22em] text-mute md:text-[12px]">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
                     KIM JI SU
                   </p>
                   <hr className="border-0 border-t border-line my-1" />
-                  <p className="text-xs leading-relaxed text-ink-soft md:text-sm">
-                    독립은 있되, 고립은 없다
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
+                    SAIJIP GAYANG · 양천로 431
                   </p>
-                </aside>
-              </div>
-            </RevealOnView>
+                </RevealOnView>
+              </aside>
+            </div>
           </div>
 
-          <div className="mt-10 md:mt-14">
-            <RevealOnView delay={450} duration={550}>
-              <h1 className="block">
-                <HeroFortune />
-              </h1>
-            </RevealOnView>
-            <RevealOnView delay={650} duration={500}>
-              <p className="mt-5 max-w-xl text-xl font-medium leading-[1.3] tracking-tight md:mt-7 md:text-4xl">
-                독립은 있되, <span className="text-accent">고립은 없다</span>
-              </p>
-            </RevealOnView>
-            <RevealOnView delay={800} duration={450}>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
-                옛 홈플러스 가양점 자리, 비움을 사이에 둔 다섯 슬래브의 집.
-              </p>
-            </RevealOnView>
-            <RevealOnView delay={950} duration={450}>
-              <a
-                href="#video"
-                className="group mt-8 inline-flex items-center gap-3 border border-ink bg-ink px-5 py-3 font-mono text-[11px] tracking-[0.25em] text-paper shadow-sm transition-colors hover:bg-accent hover:border-accent md:gap-4 md:px-6 md:py-3.5 md:text-[12px]"
-              >
-                <span>다음 — INTRO FILM</span>
-                <span aria-hidden className="transition-transform group-hover:translate-y-0.5">↓</span>
-              </a>
-            </RevealOnView>
+          {/* 하단 — 상단 grid 와 동일한 가로 anchor 구조 유지.
+              좌 col-span-8: wordmark + slogan + subtitle
+              우 col-span-4: next-scene hint + INTRO FILM CTA (우측-정렬, 하단 anchor) */}
+          <div className="mt-10 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-8 flex flex-col">
+              <RevealOnView delay={450} duration={550}>
+                <h1 className="block">
+                  <HeroFortune />
+                </h1>
+              </RevealOnView>
+              <RevealOnView delay={650} duration={500}>
+                <p className="mt-5 max-w-xl text-xl font-medium leading-[1.3] tracking-tight md:mt-7 md:text-4xl">
+                  독립은 있되, <span className="text-accent">고립은 없다</span>
+                </p>
+              </RevealOnView>
+              <RevealOnView delay={800} duration={450}>
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
+                  옛 홈플러스 가양점 자리, 비움을 사이에 둔 다섯 슬래브의 집.
+                </p>
+              </RevealOnView>
+            </div>
+            <div className="md:col-span-4 flex flex-col items-start justify-end md:items-end">
+              <RevealOnView delay={1050} duration={450}>
+                <a
+                  href="#video"
+                  className="group inline-flex items-center gap-3 border border-ink bg-ink px-5 py-3 font-mono text-[11px] tracking-[0.25em] text-paper shadow-sm transition-colors hover:bg-accent hover:border-accent md:gap-4 md:px-6 md:py-3.5 md:text-[12px]"
+                >
+                  <span>다음 — INTRO FILM</span>
+                  <span aria-hidden className="transition-transform group-hover:translate-y-0.5">↓</span>
+                </a>
+              </RevealOnView>
+            </div>
           </div>
         </div>
       </section>
