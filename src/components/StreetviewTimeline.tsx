@@ -36,10 +36,13 @@ export function StreetviewTimeline() {
         scrollTrigger: {
           trigger: outerRef.current,
           start: "top top",
-          end: `+=${(N - 1) * 70}%`, // 더 천천히 — 70vh of scroll per frame
+          end: `+=${(N - 1) * 70}%`,
           pin: pinRef.current,
           pinSpacing: true,
-          scrub: 1, // 0.4 → 1: 부드러운 lag
+          pinType: "transform", // Lenis smooth scroll 과 호환 (fixed 보다 정확)
+          anticipatePin: 1, // pin 활성화를 살짝 앞당겨 'late trigger' 방지
+          invalidateOnRefresh: true,
+          scrub: 1,
           onUpdate: (self) => {
             progressMV.set(self.progress);
             const i = Math.min(
@@ -52,7 +55,17 @@ export function StreetviewTimeline() {
       });
     }, outerRef);
 
-    return () => ctx.revert();
+    // 이미지 로드 후 측정값 재계산 (지연 로드된 이미지가 layout 을 바꿔 pin 위치
+    // 가 어긋나는 문제 방지).
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    const refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 500);
+
+    return () => {
+      window.removeEventListener("load", onLoad);
+      window.clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, [progressMV]);
 
   const current = STREETVIEW_FRAMES[idx];
@@ -61,7 +74,8 @@ export function StreetviewTimeline() {
     <section ref={outerRef as React.RefObject<HTMLElement>} className="relative">
       <div
         ref={pinRef}
-        className="relative h-screen w-full overflow-hidden bg-ink"
+        className="relative w-full overflow-hidden bg-ink"
+        style={{ height: "100vh", minHeight: "100vh" }}
       >
         {/* Horizontal strip — fills full pin; photos centered within each frame */}
         <div

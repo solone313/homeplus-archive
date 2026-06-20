@@ -28,7 +28,11 @@ export function References() {
 
       <section className="mt-16 md:mt-20">
         {REFERENCES.map((ref, idx) => (
-          <RevealOnView key={ref.id} duration={500}>
+          <RevealOnView
+            key={ref.id}
+            duration={500}
+            className={idx === 0 ? "" : "mt-12 md:mt-16"}
+          >
             <ReferenceItem
               entry={ref}
               isLast={idx === REFERENCES.length - 1}
@@ -47,7 +51,7 @@ type ReferenceItemProps = {
 
 function ReferenceItem({ entry, isLast }: ReferenceItemProps) {
   return (
-    <article className="mt-12 first:mt-0 md:mt-16">
+    <article>
       <div className="flex items-center justify-between">
         <span className="inline-flex items-center border border-line bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-ink">
           REF · {entry.num}
