@@ -4,7 +4,6 @@ import { RevealOnView } from "../components/RevealOnView";
 import { SaiLogo } from "../components/SaiLogo";
 import { VideoPlayer } from "../components/VideoPlayer";
 import { NaverMap } from "../components/NaverMap";
-import { LayerStack } from "../components/LayerStack";
 import { SwipeGallery } from "../components/SwipeGallery";
 import { Lightbox } from "../components/Lightbox";
 import { StreetviewTimeline } from "../components/StreetviewTimeline";
@@ -14,7 +13,6 @@ import {
   STORY_INTRO_VIDEO,
   STORY_INTRO_POSTER,
   HERO_IMAGE,
-  SITE_LAYERS,
   LIFE_SCENES,
   UNIT_ELEVATION,
   UNIT_SECTION,
@@ -172,14 +170,6 @@ export function Story() {
             <NaverMap ratio="16/9" zoom={16} />
           </div>
 
-          {/* Layer toggle: 철거 / 보존 / 신설 */}
-          <div className="md:col-span-12">
-            <p className="rule-dim mb-3">철거 · 보존 · 신설</p>
-            <LayerStack ratio="16/9" layers={SITE_LAYERS} />
-            <p className="mt-2 font-mono text-[10px] tracking-[0.2em] text-mute">
-              ↳ 각 레이어를 켜고/끄거나 ONLY 로 하나만 보세요 · 자료 SOON · 2026.10
-            </p>
-          </div>
         </div>
         </RevealOnView>
       </section>
