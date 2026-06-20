@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./styles/fonts.css";
 
 @theme {
   /* Silver palette — cool, slightly metallic */
@@ -23,17 +24,12 @@
   --color-accent-soft: #fbcfe8;
   --color-accent-deep: #be185d;
 
-  --font-display: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
-}
-
-@font-face {
-  font-family: "Pretendard Variable";
-  font-weight: 45 920;
-  font-style: normal;
-  font-display: swap;
-  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/PretendardVariable.woff2")
-    format("woff2-variations");
+  /* 본문/UI 기본: 라틴=Asta Sans, 한글=윤고딕 (unicode-range 분기) */
+  --font-display: "SaiSans", "Apple SD Gothic Neo", system-ui, sans-serif;
+  /* 라틴 라벨/메타: Asta Sans 가 mono-ish 한 인상이라 동일 패밀리 사용 (별도 mono 폰트 없이 letter-spacing 으로 처리) */
+  --font-mono: "SaiSans", ui-monospace, Menlo, monospace;
+  /* 포인트/강조: Line Seed Sans KR — slogan/h1 강조 자리에 */
+  --font-point: "SaiPoint", "SaiSans", "Apple SD Gothic Neo", sans-serif;
 }
 
 * {
@@ -69,10 +65,12 @@ body {
     color: inherit;
   }
 
+  /* 포인트 헤딩 — Line Seed Sans 가 무게 있는 자리를 잡고 본문은 SaiSans 유지 */
   h1,
   h2,
   h3 {
-    font-weight: 800;
+    font-family: var(--font-point);
+    font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.04;
   }

@@ -1,0 +1,74 @@
+/*
+ * 사이집 폰트 시스템
+ *
+ *   SaiSans  : 본문/UI 기본 — 라틴은 Asta Sans (variable), 한글은 윤고딕 320.
+ *              unicode-range 로 자동 분기되어 한 패밀리로 두 문자권 표현.
+ *   SaiPoint : 포인트/강조 — Line Seed Sans KR (slogan/h1 등 무게가 실리는 자리)
+ *
+ * 모두 src/assets/fonts/_woff2/ 의 woff2 (Latin 은 subset 한 가변 폰트, 윤고딕은
+ * TTF 그대로). URL 은 Vite 가 빌드 시 해시 + base 처리.
+ */
+
+/* ─────────── SaiSans · Latin (Asta Sans Variable) ─────────── */
+@font-face {
+  font-family: "SaiSans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/_woff2/AstaSans-VF.woff2") format("woff2");
+  unicode-range:
+    U+0000-024F, /* Basic Latin + Latin-1 Supplement + Latin Extended-A */
+    U+0300-036F, /* Combining diacritical marks */
+    U+2000-206F, /* General punctuation (en/em dash, …) */
+    U+2070-209F, /* Super/subscripts */
+    U+20A0-20CF, /* Currency */
+    U+2100-214F, /* Letterlike symbols */
+    U+2150-218F, /* Number forms */
+    U+2190-21FF, /* Arrows */
+    U+2200-22FF, /* Mathematical operators */
+    U+25A0-25FF, /* Geometric shapes */
+    U+2600-26FF, /* Misc symbols (◆ etc.) */
+    U+FB00-FB4F; /* Latin ligatures */
+}
+
+/* ─────────── SaiSans · Hangul (윤고딕 320) ───────────
+   윤고딕 320 은 단일 weight. 모든 weight 에 동일 파일 매핑 — 한글은 weight 변화
+   없이 일관된 굵기로 노출. */
+@font-face {
+  font-family: "SaiSans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/_woff2/YoonGothic-320.ttf") format("truetype");
+  unicode-range:
+    U+AC00-D7AF, /* Hangul Syllables */
+    U+1100-11FF, /* Hangul Jamo */
+    U+3130-318F, /* Hangul Compatibility Jamo */
+    U+A960-A97F, /* Hangul Jamo Extended-A */
+    U+D7B0-D7FF, /* Hangul Jamo Extended-B */
+    U+3000-303F, /* CJK Symbols and Punctuation */
+    U+FF00-FFEF; /* Halfwidth / Fullwidth Forms */
+}
+
+/* ─────────── SaiPoint · Line Seed Sans KR (포인트 강조) ─────────── */
+@font-face {
+  font-family: "SaiPoint";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("../assets/fonts/_woff2/LINESeedKR-Th.woff2") format("woff2");
+}
+@font-face {
+  font-family: "SaiPoint";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/_woff2/LINESeedKR-Rg.woff2") format("woff2");
+}
+@font-face {
+  font-family: "SaiPoint";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/_woff2/LINESeedKR-Bd.woff2") format("woff2");
+}

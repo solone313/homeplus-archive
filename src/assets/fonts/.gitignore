@@ -1,0 +1,8 @@
+# 원본 폰트 (~33MB) 는 git 추적 제외 — _woff2/ 로 변환된 사본만 사용.
+# 원본을 복구하려면 디자이너로부터 다시 받거나 (Asta Sans/Line Seed) Yoon
+# Design 라이선스 채널 (윤고딕 320) 을 통해 재취득.
+asta-sans/AstaSans-VariableFont_wght.ttf
+asta-sans/README.txt
+asta-sans/static/
+line-seed-sans/
+yoon-gothic-320.ttf
