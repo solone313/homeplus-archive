@@ -1,87 +1,64 @@
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+} from "framer-motion";
 import { STREETVIEW_FRAMES } from "../constants/site";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const N = STREETVIEW_FRAMES.length;
 
 /**
  * 시간의 파노라마 — 가양 홈플러스 25년이 좌→우로 흐른다.
  *
- * Pin + horizontal-pan via GSAP ScrollTrigger. Nav 가 위에 떠 있으므로
- * 모든 텍스트 오버레이는 하단으로 모음 — 사진은 가운데 작게 떠 있고
- * 양옆/위아래는 검은 여백 (영화관식 framing).
+ * 구현: CSS position: sticky + framer-motion useScroll. Lenis 의존을 제거해
+ * 네이티브 스크롤로 sticky 가 안정적으로 작동하게 함.
+ *
+ * Layout:
+ *   <section h={N*70vh}>            ← outer 가 scroll range 를 결정
+ *     <div sticky top-0 h-screen>   ← pin (네이티브 sticky)
+ *       <strip translateX(...)>     ← 가로 panning
+ *         {photos[]}
+ *       </strip>
+ *       <bottom panel: year + bar />
+ *     </div>
+ *   </section>
  */
 export function StreetviewTimeline() {
-  const outerRef = useRef<HTMLElement>(null);
-  const pinRef = useRef<HTMLDivElement>(null);
-  const stripRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
+
+  // strip 자체 너비 대비 -((N-1)*100/N)% 만큼 왼쪽으로 이동.
+  const xEnd = -((N - 1) * 100) / N;
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", `${xEnd}%`]);
+  const finalOpacity = useTransform(scrollYProgress, [0.9, 0.99], [0, 1]);
 
   const [idx, setIdx] = useState(0);
-  const progressMV = useMotionValue(0);
-  const finalOpacity = useTransform(progressMV, [0.9, 0.99], [0, 1]);
-
-  useEffect(() => {
-    if (!outerRef.current || !pinRef.current || !stripRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const totalShiftPercent = -((N - 1) / N) * 100;
-
-      gsap.to(stripRef.current, {
-        xPercent: totalShiftPercent,
-        ease: "none",
-        scrollTrigger: {
-          trigger: outerRef.current,
-          start: "top top",
-          end: `+=${(N - 1) * 70}%`,
-          pin: pinRef.current,
-          pinSpacing: true,
-          pinType: "transform", // Lenis smooth scroll 과 호환 (fixed 보다 정확)
-          anticipatePin: 1, // pin 활성화를 살짝 앞당겨 'late trigger' 방지
-          invalidateOnRefresh: true,
-          scrub: 1,
-          onUpdate: (self) => {
-            progressMV.set(self.progress);
-            const i = Math.min(
-              N - 1,
-              Math.max(0, Math.round(self.progress * (N - 1))),
-            );
-            setIdx((prev) => (prev !== i ? i : prev));
-          },
-        },
-      });
-    }, outerRef);
-
-    // 이미지 로드 후 측정값 재계산 (지연 로드된 이미지가 layout 을 바꿔 pin 위치
-    // 가 어긋나는 문제 방지).
-    const onLoad = () => ScrollTrigger.refresh();
-    window.addEventListener("load", onLoad);
-    const refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 500);
-
-    return () => {
-      window.removeEventListener("load", onLoad);
-      window.clearTimeout(refreshTimer);
-      ctx.revert();
-    };
-  }, [progressMV]);
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    const i = Math.min(N - 1, Math.max(0, Math.round(p * (N - 1))));
+    setIdx((prev) => (prev !== i ? i : prev));
+  });
 
   const current = STREETVIEW_FRAMES[idx];
 
   return (
-    <section ref={outerRef as React.RefObject<HTMLElement>} className="relative">
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      className="relative w-full"
+      style={{ height: `${(N - 1) * 70 + 100}vh` }}
+    >
       <div
-        ref={pinRef}
-        className="relative w-full overflow-hidden bg-ink"
-        style={{ height: "100vh", minHeight: "100vh" }}
+        className="sticky top-0 w-full overflow-hidden bg-ink"
+        style={{ height: "100vh" }}
       >
-        {/* Horizontal strip — fills full pin; photos centered within each frame */}
-        <div
-          ref={stripRef}
+        {/* Horizontal strip — photos centered within each frame */}
+        <motion.div
           className="flex h-full"
-          style={{ width: `${N * 100}%` }}
+          style={{ width: `${N * 100}%`, x }}
         >
           {STREETVIEW_FRAMES.map((f, i) => {
             const sat =
@@ -110,11 +87,10 @@ export function StreetviewTimeline() {
               </div>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Bottom info panel — everything stacked here so Nav doesn't cover anything */}
+        {/* Bottom panel — year + progress + endpoints */}
         <div className="pointer-events-none absolute inset-x-4 bottom-6 z-20 md:inset-x-10 md:bottom-10">
-          {/* Year — large, real-time */}
           <div className="mb-3 flex items-baseline justify-between md:mb-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/55 md:text-[11px]">
               STREETVIEW · 가양
@@ -124,23 +100,19 @@ export function StreetviewTimeline() {
               {current.year}
             </span>
           </div>
-
-          {/* Progress bar */}
           <div className="relative h-px bg-paper/15">
             <motion.div
               className="absolute inset-0 h-px origin-left bg-accent"
-              style={{ scaleX: progressMV }}
+              style={{ scaleX: scrollYProgress }}
             />
           </div>
-
-          {/* Endpoint labels */}
           <div className="mt-2 flex justify-between font-mono text-[9px] uppercase tracking-[0.22em] text-paper/50 md:mt-3 md:text-[10px]">
             <span>2000</span>
             <span>2025</span>
           </div>
         </div>
 
-        {/* Closing overlay — fades in on last frame */}
+        {/* Closing overlay */}
         <motion.div
           className="pointer-events-none absolute inset-0 z-30 grid place-items-center bg-ink/55"
           style={{ opacity: finalOpacity }}

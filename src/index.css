@@ -51,7 +51,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.01em;
-  overflow-x: hidden;
+  /* clip 은 hidden 과 시각적으로 동일하지만 sticky scroll container 를 만들지
+     않아 position: sticky 가 viewport 기준으로 정상 작동한다. */
+  overflow-x: clip;
 }
 
 ::selection {

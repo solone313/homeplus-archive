@@ -5,7 +5,6 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { useLenis } from "./hooks/useLenis";
 import { Nav } from "./components/Nav";
 import { Story } from "./pages/Story";
 import { Drawings } from "./pages/Drawings";
@@ -22,8 +21,6 @@ function ScrollToTop() {
 }
 
 function App() {
-  useLenis();
-
   return (
     <HashRouter>
       <ScrollToTop />
