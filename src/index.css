@@ -2,27 +2,32 @@
 @import "./styles/fonts.css";
 
 @theme {
-  /* Silver palette — cool, slightly metallic */
-  --color-silver-50: #f6f6f8;
-  --color-silver-100: #ececef;
-  --color-silver-200: #d8d9dd;
-  --color-silver-300: #b8bac0;
-  --color-silver-400: #8b8d94;
-  --color-silver-500: #5c5e64;
-  --color-silver-600: #3a3b40;
+  /* Warm paper palette — earthy, architectural (re-grounded 2026.06) */
+  --color-silver-50: #faf8f4;
+  --color-silver-100: #f3f2ee;
+  --color-silver-200: #e8e5de;
+  --color-silver-300: #d7d2c8;
+  --color-silver-400: #b8b1a6;
+  --color-silver-500: #8c857a;
+  --color-silver-600: #5e574e;
 
-  --color-paper: #ececef;
-  --color-paper-soft: #f6f6f8;
-  --color-surface: #d8d9dd;
-  --color-ink: #18181b;
-  --color-ink-soft: #3a3b40;
-  --color-mute: #8b8d94;
-  --color-line: #cdced3;
+  --color-paper: #f3f2ee;        /* warm off-white */
+  --color-paper-soft: #faf8f4;
+  --color-surface: #e8e5de;
+  --color-ink: #1a1817;          /* warm dark (살짝 brown-black) */
+  --color-ink-soft: #3d3835;
+  --color-mute: #8c857a;         /* warm grey */
+  --color-line: #dac7c1;         /* sub: warm beige line */
 
-  /* Pink accent */
-  --color-accent: #ec4899;
-  --color-accent-soft: #fbcfe8;
-  --color-accent-deep: #be185d;
+  /* Main accent — clay red (대체: 이전 핑크 #ec4899) */
+  --color-accent: #a03d3a;
+  --color-accent-soft: #f3ddd9;
+  --color-accent-deep: #672926;
+
+  /* Sub palette — 도면/architectural tints */
+  --color-mint: #add1ca;         /* 사이/void 표현 */
+  --color-beige: #dac7c1;
+  --color-olive: #d3d9c7;
 
   /* 본문/UI 기본: 라틴=Asta Sans, 한글=윤고딕 → 윤고딕 파일 실패 시 Apple SD
      Gothic Neo / Malgun Gothic 으로 자연 fallback. */

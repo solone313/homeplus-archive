@@ -7,7 +7,7 @@ export function Film() {
     <PageShell
       tag="03 / FILM"
       title="필름"
-      subtitle="짧은 영상과 캡션. STORY 인트로 영상과는 다른, 별도의 작품 필름입니다."
+      subtitle="짧은 영상과 캡션. STORY 의 INTRO FILM 과 동일한 영상을 별도 페이지에서 확인할 수 있습니다."
     >
       <section className="mx-auto max-w-[1440px] px-4 pt-8 md:px-10 md:pt-12">
         <p className="mb-4 font-mono text-[10px] tracking-[0.22em] text-mute md:mb-6">

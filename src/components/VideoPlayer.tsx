@@ -11,6 +11,20 @@ type Props = {
   caption?: string;
 };
 
+/** Extracts the 11-char video id from any common YouTube URL form, or null. */
+function parseYouTubeId(url: string): string | null {
+  const m = url.match(
+    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+  );
+  return m ? m[1] : null;
+}
+
+/** Extracts a Vimeo numeric id from any common Vimeo URL form, or null. */
+function parseVimeoId(url: string): string | null {
+  const m = url.match(/vimeo\.com\/(?:video\/)?(\d{6,})/);
+  return m ? m[1] : null;
+}
+
 export function VideoPlayer({
   src,
   poster,
@@ -23,6 +37,10 @@ export function VideoPlayer({
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(autoplay);
   const [visible, setVisible] = useState(false);
+
+  // External video host detection — early branch (separate render)
+  const ytId = src ? parseYouTubeId(src) : null;
+  const vimeoId = src && !ytId ? parseVimeoId(src) : null;
 
   // Pause / play when off / on screen
   useEffect(() => {
@@ -62,6 +80,71 @@ export function VideoPlayer({
       setPlaying(false);
     }
   };
+
+  // YouTube / Vimeo iframe path — 해당 호스트 player 의 native 컨트롤 사용.
+  // autoplay 는 muted 일 때만 정책상 허용되므로 mute=1 강제.
+  if (ytId) {
+    const params = new URLSearchParams({
+      autoplay: autoplay ? "1" : "0",
+      mute: "1",
+      loop: loop ? "1" : "0",
+      ...(loop ? { playlist: ytId } : {}), // YouTube loop 은 playlist param 필요
+      modestbranding: "1",
+      rel: "0",
+      playsinline: "1",
+    });
+    return (
+      <div
+        className="relative w-full overflow-hidden border border-line/60 bg-ink"
+        style={{ aspectRatio: ratio }}
+      >
+        <iframe
+          src={`https://www.youtube.com/embed/${ytId}?${params.toString()}`}
+          title={caption ?? "intro film"}
+          className="absolute inset-0 h-full w-full"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          allowFullScreen
+          loading="lazy"
+        />
+        {caption && (
+          <p className="pointer-events-none absolute bottom-3 left-3 right-3 font-mono text-[10px] tracking-[0.2em] text-paper/80">
+            {caption}
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  if (vimeoId) {
+    const params = new URLSearchParams({
+      autoplay: autoplay ? "1" : "0",
+      muted: "1",
+      loop: loop ? "1" : "0",
+      title: "0",
+      byline: "0",
+      portrait: "0",
+    });
+    return (
+      <div
+        className="relative w-full overflow-hidden border border-line/60 bg-ink"
+        style={{ aspectRatio: ratio }}
+      >
+        <iframe
+          src={`https://player.vimeo.com/video/${vimeoId}?${params.toString()}`}
+          title={caption ?? "intro film"}
+          className="absolute inset-0 h-full w-full"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          loading="lazy"
+        />
+        {caption && (
+          <p className="pointer-events-none absolute bottom-3 left-3 right-3 font-mono text-[10px] tracking-[0.2em] text-paper/80">
+            {caption}
+          </p>
+        )}
+      </div>
+    );
+  }
 
   if (!src) {
     return (

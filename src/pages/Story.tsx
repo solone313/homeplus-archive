@@ -186,12 +186,12 @@ export function Story() {
             다시 집으로
           </>
         }
-        subtitle="국토부 최저주거기준 1인 14sqm. 잠자고 먹고 씻는 것만 겨우 가능한 면적. 비움은 면적을 포기하는 것이 아니라, 주어진 면적이 주거로서 기능하도록 하는 수단이다."
+        subtitle="국토부 최저주거기준 1인 14m². 잠자고 먹고 씻는 것만 겨우 가능한 면적. 비움은 면적을 포기하는 것이 아니라, 주어진 면적이 주거로서 기능하도록 하는 수단이다."
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
           {[
             { n: 1, metric: "1인 가구 가구당 면적 추이 (2000-2025)" },
-            { n: 2, metric: "14sqm 행위면적 분배" },
+            { n: 2, metric: "14m² 행위면적 분배" },
             { n: 3, metric: "사회적 관계 활성화 지표" },
           ].map(({ n, metric }) => (
             <Frame

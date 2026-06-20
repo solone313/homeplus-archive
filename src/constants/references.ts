@@ -64,7 +64,7 @@ export const REFERENCES: readonly ReferenceEntry[] = [
     year: 2009,
     source: "한국주거학회논문집 20(1)",
     url: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001319660",
-    note: "유닛 14sqm 의 적정 행위면적 분배 — ‘잠자는 면적’ 과 ‘살아가는 면적’ 의 구분.",
+    note: "유닛 14m² 의 적정 행위면적 분배 — ‘잠자는 면적’ 과 ‘살아가는 면적’ 의 구분.",
   },
   {
     id: "who-sedentary",
