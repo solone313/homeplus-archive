@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 const ROUTES = [
   { to: "/", label: "STORY" },
@@ -8,6 +8,15 @@ const ROUTES = [
 ];
 
 export function Nav() {
+  const { pathname } = useLocation();
+  // 같은 경로(STORY 첫 화면)에서 로고를 누르면 React Router 가 navigation 을 무시 →
+  // 명시적으로 scroll-to-top 호출. 다른 페이지에서는 Link 가 / 로 이동하고
+  // ScrollToTop 이 처리.
+  const handleLogoClick = () => {
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
+  };
   return (
     <>
       {/* Top bar — both mobile and desktop */}
@@ -15,6 +24,7 @@ export function Nav() {
         <div className="mx-auto flex h-12 max-w-[1440px] items-center justify-between px-4 md:h-14 md:px-8">
           <Link
             to="/"
+            onClick={handleLogoClick}
             className="group flex items-center text-ink"
             aria-label="사이집 메인으로"
           >
