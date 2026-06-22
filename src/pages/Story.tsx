@@ -340,6 +340,48 @@ export function Story() {
         </div>
       </Section>
 
+      {/* THANKS TO — credits ───────────────────────────────────── */}
+      <section className="mx-auto max-w-[1440px] px-4 py-20 md:px-10 md:py-28">
+        <header className="mb-10 text-center md:mb-14">
+          <RevealOnView as="p" delay={0} duration={400} className="font-mono text-[10px] uppercase tracking-[0.3em] text-mute md:text-[11px]">
+            ─ THANKS TO ─
+          </RevealOnView>
+          <RevealOnView delay={120} duration={500}>
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-soft md:mt-5 md:text-[12px]">
+              도와준 사람들
+            </p>
+          </RevealOnView>
+        </header>
+        <ul className="mx-auto flex max-w-md flex-col items-center gap-3 text-center md:gap-4">
+          {[
+            "선희",
+            "주연",
+            "이경",
+            "호진",
+            "주원",
+            "혜성",
+            "허씨자매들",
+            "동규",
+            "후림",
+            "형준",
+            "하윤",
+            "세진",
+            "신웅",
+            "나영",
+          ].map((name, i) => (
+            <RevealOnView key={name} delay={240 + i * 80} duration={450}>
+              <li className="text-lg font-light leading-tight text-ink md:text-xl">
+                {name}
+              </li>
+            </RevealOnView>
+          ))}
+        </ul>
+        {/* Bottom hairline as credit close */}
+        <RevealOnView delay={240 + 14 * 80 + 200} duration={500} className="mt-12 flex justify-center md:mt-16">
+          <span className="h-px w-12 bg-line" />
+        </RevealOnView>
+      </section>
+
       {/* END ───────────────────────────────────── */}
       <section className="mx-auto max-w-[1440px] px-4 py-16 md:px-10 md:py-24">
         <p className="rule-dim mb-4">END · 더 보기</p>
