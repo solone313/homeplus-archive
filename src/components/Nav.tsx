@@ -19,7 +19,7 @@ export function Nav() {
             aria-label="사이집 메인으로"
           >
             <img
-              src={`${import.meta.env.BASE_URL}saijip-wordmark.png`}
+              src={`${import.meta.env.BASE_URL}saijip-wordmark-light.png`}
               alt="사이집"
               className="block h-5 w-auto md:h-6"
             />

@@ -16,56 +16,51 @@ export function Story() {
     <>
 
       {/* 00 HERO ───────────────────────────────────── */}
-      <section id="hero" className="relative w-full bg-white">
-        <div className="relative z-10 mx-auto flex max-w-[1440px] flex-col px-4 pb-16 pt-16 md:px-10 md:pb-20 md:pt-24">
-          <div>
-            <RevealOnView as="p" delay={0} duration={400} className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
-              <SaiLogo className="h-[10px] w-auto" />
-              SCENE 00 — INTRO
-            </RevealOnView>
+      {/* HERO — h-screen 으로 정확히 viewport 채움. photo 는 남는 공간을 fill */}
+      <section id="hero" className="relative w-full bg-paper" style={{ minHeight: "100vh" }}>
+        <div className="relative z-10 mx-auto flex h-screen max-w-[1440px] flex-col px-4 pb-8 pt-14 md:px-10 md:pb-10 md:pt-16">
+          <RevealOnView as="p" delay={0} duration={400} className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
+            <SaiLogo className="h-[10px] w-auto" />
+            SCENE 00 — INTRO
+          </RevealOnView>
 
-            {/* Architectural plate — photo + 우상단 작은 메타 (좌측 SCENE label 의 짝).
-                메타는 도면적 anchor 두 자리 (좌 SCENE · 우 작품 신원) 만 잡고
-                wordmark / 슬로건은 하단으로 양보 — 정체성 자리 중복 해소. */}
-            <div className="mt-5 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-12 md:gap-8">
-              <RevealOnView as="figure" delay={180} duration={650} className="md:col-span-9">
-                <div className="relative aspect-[16/10] overflow-hidden border border-line bg-white">
-                  {HERO_IMAGE ? (
-                    <img
-                      src={HERO_IMAGE}
-                      alt="사이집 가양"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  ) : (
-                    <div className="silver-shimmer absolute inset-0 grid place-items-center">
-                      <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
-                        대표 이미지 슬롯 · SOON · 2026.10
-                      </span>
-                    </div>
-                  )}
-                </div>
+          {/* Photo + meta — flex-1 로 남는 공간 fill. photo 가 height auto-stretch. */}
+          <div className="mt-3 grid min-h-0 flex-1 grid-cols-1 gap-3 md:mt-4 md:grid-cols-12 md:gap-6">
+            <RevealOnView as="figure" delay={180} duration={650} className="md:col-span-9 min-h-0">
+              <div className="relative h-full w-full overflow-hidden border border-line bg-paper-soft">
+                {HERO_IMAGE ? (
+                  <img
+                    src={HERO_IMAGE}
+                    alt="사이집 가양"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="silver-shimmer absolute inset-0 grid place-items-center">
+                    <span className="font-mono text-[11px] tracking-[0.3em] text-mute">
+                      대표 이미지 슬롯 · SOON · 2026.10
+                    </span>
+                  </div>
+                )}
+              </div>
+            </RevealOnView>
+            <aside className="md:col-span-3 flex shrink-0 flex-col justify-end gap-2 md:gap-3">
+              <RevealOnView delay={320} duration={450} className="flex flex-col gap-2 md:gap-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
+                  GRADUATION DESIGN · 2026
+                </p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
+                  KIM JI SU
+                </p>
+                <hr className="border-0 border-t border-line my-1" />
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
+                  SAIJIP GAYANG · 양천로 431
+                </p>
               </RevealOnView>
-              <aside className="md:col-span-3 flex flex-col justify-end gap-2 md:gap-3">
-                <RevealOnView delay={320} duration={450} className="flex flex-col gap-2 md:gap-3">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
-                    GRADUATION DESIGN · 2026
-                  </p>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
-                    KIM JI SU
-                  </p>
-                  <hr className="border-0 border-t border-line my-1" />
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute md:text-[11px]">
-                    SAIJIP GAYANG · 양천로 431
-                  </p>
-                </RevealOnView>
-              </aside>
-            </div>
+            </aside>
           </div>
 
-          {/* 하단 — 상단 grid 와 동일한 가로 anchor 구조 유지.
-              좌 col-span-8: wordmark + slogan + subtitle
-              우 col-span-4: next-scene hint + INTRO FILM CTA (우측-정렬, 하단 anchor) */}
-          <div className="mt-10 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-12 md:gap-8">
+          {/* 하단 row — wordmark + slogan + CTA */}
+          <div className="mt-4 grid shrink-0 grid-cols-1 gap-3 md:mt-5 md:grid-cols-12 md:gap-6">
             <div className="md:col-span-8 flex flex-col">
               <RevealOnView delay={450} duration={550}>
                 <h1 className="block">
@@ -73,12 +68,12 @@ export function Story() {
                 </h1>
               </RevealOnView>
               <RevealOnView delay={650} duration={500}>
-                <p className="mt-5 max-w-xl text-xl font-medium leading-[1.3] tracking-tight md:mt-7 md:text-4xl">
+                <p className="mt-2 max-w-xl text-xl font-medium leading-[1.2] tracking-tight md:mt-3 md:text-3xl">
                   독립은 있되, <span className="text-accent">고립은 없다</span>
                 </p>
               </RevealOnView>
               <RevealOnView delay={800} duration={450}>
-                <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
+                <p className="mt-2 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
                   옛 홈플러스 가양점 자리, 비움을 사이에 둔 다섯 슬래브의 집.
                 </p>
               </RevealOnView>
@@ -107,16 +102,36 @@ export function Story() {
       </section>
 
       {/* 01 INTRO VIDEO ───────────────────────────────────── */}
-      <Section id="video" tag="SCENE 01 — INTRO FILM" title="영상으로 먼저 만나기">
-        <VideoPlayer
-          src={STORY_INTRO_VIDEO}
-          poster={STORY_INTRO_POSTER}
-          ratio="16/9"
-        />
-        <p className="mt-3 font-mono text-[11px] tracking-[0.18em] text-mute">
-          ↳ 음소거 자동재생 · 클릭 또는 SOUND ON 버튼으로 사운드 활성
-        </p>
-      </Section>
+      {/* 01 INTRO FILM — 한 viewport 에 헤더+영상+캡션 모두 들어오게 inline 작은
+          layout. Section helper 의 8vw h2 + py-24 는 너무 커서 분리. */}
+      <section
+        id="video"
+        className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 py-10 md:px-10 md:py-14"
+      >
+        <header className="mb-4 md:mb-6">
+          <RevealOnView as="p" delay={0} duration={400} className="mb-2 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-3">
+            <SaiLogo className="h-[10px] w-auto" />
+            SCENE 01 — INTRO FILM
+          </RevealOnView>
+          <RevealOnView delay={80} duration={500}>
+            <h2 className="text-3xl font-extrabold leading-[1.15] tracking-[-0.025em] md:text-4xl">
+              영상으로 먼저 만나기
+            </h2>
+          </RevealOnView>
+        </header>
+        <RevealOnView delay={160} duration={500}>
+          <div className="mx-auto" style={{ maxWidth: "min(820px, 56vh * 16 / 9)" }}>
+            <VideoPlayer
+              src={STORY_INTRO_VIDEO}
+              poster={STORY_INTRO_POSTER}
+              ratio="16/9"
+            />
+            <p className="mt-2 font-mono text-[10px] tracking-[0.18em] text-mute md:text-[11px]">
+              ↳ 음소거 자동재생 · 클릭 또는 SOUND ON 버튼으로 사운드 활성
+            </p>
+          </div>
+        </RevealOnView>
+      </section>
 
       {/* 02 SITE ───────────────────────────────────── */}
       {/* SCENE 02 header — separate section so the panorama below can use

@@ -56,13 +56,6 @@ const sv = (year: number) =>
 
 export const STREETVIEW_FRAMES: StreetviewFrame[] = [
   { year: 2010, src: sv(2010), context: "개장 직후" },
-  { year: 2012, src: sv(2012), context: "자리 잡힘" },
-  { year: 2014, src: sv(2014), context: "동네의 부엌" },
-  { year: 2016, src: sv(2016), context: "정점" },
-  { year: 2018, src: sv(2018), context: "여전한 일상" },
   { year: 2020, src: sv(2020), context: "변화의 그늘" },
-  { year: 2022, src: sv(2022), context: "발길이 줄어" },
-  { year: 2024, src: sv(2024), context: "마지막 손님" },
   { year: 2025, src: sv(2025), context: "폐점" },
-  { year: 2026, src: sv(2026), context: "사라진 자리" },
 ];

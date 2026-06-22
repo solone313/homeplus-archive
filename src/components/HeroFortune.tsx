@@ -104,13 +104,13 @@ export function HeroFortune() {
       {/* Combined logo (사이집 wordmark + abstract shapes) — splits open on click */}
       <div className={`hf-wrapper inline-block ${isSplit ? "is-split" : ""}`}>
         <div
-          className={`hf-trigger group relative aspect-[527/192] h-[22vw] max-w-full md:h-[clamp(4.5rem,10vw,10rem)] ${
+          className={`hf-trigger group relative aspect-[527/192] h-[18vw] max-w-full md:h-[clamp(3.5rem,7vw,7rem)] ${
             isSplit ? "is-split" : ""
           }`}
         >
           {/* Left half — clipped to left 50% of image */}
           <img
-            src={`${import.meta.env.BASE_URL}saijip-combined.png`}
+            src={`${import.meta.env.BASE_URL}saijip-combined-light.png`}
             alt="사이집"
             aria-hidden
             className="hf-left absolute inset-0 h-full w-full select-none object-contain"
@@ -118,7 +118,7 @@ export function HeroFortune() {
           />
           {/* Right half — clipped to right 50% */}
           <img
-            src={`${import.meta.env.BASE_URL}saijip-combined.png`}
+            src={`${import.meta.env.BASE_URL}saijip-combined-light.png`}
             alt=""
             aria-hidden
             className="hf-right absolute inset-0 h-full w-full select-none object-contain"
@@ -136,7 +136,7 @@ export function HeroFortune() {
               width: "14%",
               transform: "translateX(-50%)",
               background:
-                "radial-gradient(closest-side, #ec4899 0%, transparent 65%)",
+                "radial-gradient(closest-side, #a03d3a 0%, transparent 65%)",
               filter: "blur(4px)",
               borderRadius: "50%",
             }}
@@ -216,7 +216,7 @@ export function HeroFortune() {
         }
         .hf-wrapper:hover .hf-trigger::after,
         .hf-wrapper:focus-within .hf-trigger::after {
-          border-color: rgba(236, 72, 153, 0.45);
+          border-color: rgba(160, 61, 58, 0.45);
         }
         .hf-wrapper.is-split .hf-trigger::after { border-color: transparent; }
 

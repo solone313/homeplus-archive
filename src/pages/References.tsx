@@ -53,7 +53,7 @@ function ReferenceItem({ entry, isLast }: ReferenceItemProps) {
   return (
     <article>
       <div className="flex items-center justify-between">
-        <span className="inline-flex items-center border border-line bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-ink">
+        <span className="inline-flex items-center border border-line bg-paper-soft px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-ink">
           REF · {entry.num}
         </span>
         <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-mute">

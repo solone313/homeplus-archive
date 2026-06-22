@@ -2,30 +2,32 @@
 @import "./styles/fonts.css";
 
 @theme {
-  /* Warm paper palette — earthy, architectural (re-grounded 2026.06) */
-  --color-silver-50: #faf8f4;
-  --color-silver-100: #f3f2ee;
-  --color-silver-200: #e8e5de;
-  --color-silver-300: #d7d2c8;
-  --color-silver-400: #b8b1a6;
-  --color-silver-500: #8c857a;
-  --color-silver-600: #5e574e;
+  /* Dark archive palette — 배경은 warm-black, 위에 올라가는 색은 사용자 지정
+     메인 #A03D3A clay + sub mint/beige/olive/off-white #F3F2EE.
+     본문 텍스트는 순수 흰색 아닌 sub off-white #F3F2EE. */
+  --color-silver-50: #1f1c1a;
+  --color-silver-100: #2a2522;
+  --color-silver-200: #3d3835;
+  --color-silver-300: #5e574e;
+  --color-silver-400: #8c857a;
+  --color-silver-500: #b8b1a6;
+  --color-silver-600: #d7d2c8;
 
-  --color-paper: #f3f2ee;        /* warm off-white */
-  --color-paper-soft: #faf8f4;
-  --color-surface: #e8e5de;
-  --color-ink: #1a1817;          /* warm dark (살짝 brown-black) */
-  --color-ink-soft: #3d3835;
-  --color-mute: #8c857a;         /* warm grey */
-  --color-line: #dac7c1;         /* sub: warm beige line */
+  --color-paper: #0a0a0a;        /* 아예 다크 — 거의 pure black (살짝 off-black) */
+  --color-paper-soft: #14110f;
+  --color-surface: #3d3835;
+  --color-ink: #f3f2ee;          /* sub off-white — 본문 (순수 흰 X) */
+  --color-ink-soft: #d7d2c8;
+  --color-mute: #8c857a;
+  --color-line: #3d3835;         /* dark hairline */
 
-  /* Main accent — clay red (대체: 이전 핑크 #ec4899) */
+  /* Main accent — 사용자 지정 #A03D3A clay (dark bg 에서 헤드라인/강조 자리) */
   --color-accent: #a03d3a;
-  --color-accent-soft: #f3ddd9;
-  --color-accent-deep: #672926;
+  --color-accent-soft: #5c2826;
+  --color-accent-deep: #d8918b;
 
-  /* Sub palette — 도면/architectural tints */
-  --color-mint: #add1ca;         /* 사이/void 표현 */
+  /* Sub palette — dark bg 에서 자체 발광. mint/beige/olive 가 핵심 색감 자원 */
+  --color-mint: #add1ca;
   --color-beige: #dac7c1;
   --color-olive: #d3d9c7;
 
@@ -46,7 +48,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #ffffff;
+  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-display);
   font-feature-settings: "ss01", "ss02";
