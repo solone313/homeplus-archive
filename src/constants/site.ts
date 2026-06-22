@@ -14,10 +14,10 @@ export const SITE_PLACE_ID = "626133525";
 
 // Media URLs — drop assets in /public/media/ and put the path here.
 // YouTube/Vimeo URL 직접 또는 MP4 경로 모두 지원 — VideoPlayer 가 host 자동 감지.
-export const STORY_INTRO_VIDEO = "https://www.youtube.com/watch?v=9imOi2-o4wI";
+export const STORY_INTRO_VIDEO = "https://youtu.be/qckC2rvW8Kc";
 export const STORY_INTRO_POSTER = ""; // e.g. "/media/story-intro-poster.jpg"
 // Film 탭은 일단 INTRO 와 동일 영상 — 별도 영상 도착 시 분리.
-export const FILM_VIDEO = "https://www.youtube.com/watch?v=9imOi2-o4wI";
+export const FILM_VIDEO = "https://youtu.be/qckC2rvW8Kc";
 export const FILM_POSTER = ""; // e.g. "/media/film-poster.jpg"
 export const DRAWINGS_PDF = ""; // e.g. "/media/drawings.pdf"
 export const HERO_IMAGE = `${import.meta.env.BASE_URL}hero-main-v2.png`;

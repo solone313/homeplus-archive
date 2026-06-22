@@ -60,6 +60,72 @@ body {
   overflow-x: clip;
 }
 
+/* 골강판 스크롤바 — thumb 에 가로 ridge 반복 (highlight → mid → shadow →
+   mid → highlight). 8px 한 cycle 로 명확한 corrugated metal 패턴. */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+::-webkit-scrollbar-track {
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0,
+      rgba(0, 0, 0, 0.6) 4px,
+      rgba(255, 255, 255, 0.04) 4px,
+      rgba(255, 255, 255, 0.04) 5px,
+      rgba(0, 0, 0, 0.3) 5px,
+      rgba(0, 0, 0, 0.3) 8px
+    ),
+    #14110f;
+  border-left: 1px solid var(--color-line);
+}
+::-webkit-scrollbar-thumb {
+  background: repeating-linear-gradient(
+    to bottom,
+    /* 1) peak — 밝은 highlight 한 줄 */
+    #d7d2c8 0,
+    #d7d2c8 1px,
+    /* 2) slope down — mid */
+    #b8b1a6 1px,
+    #b8b1a6 3px,
+    /* 3) trough — 어두운 그루브 */
+    #3d3835 3px,
+    #3d3835 5px,
+    /* 4) slope up — mid */
+    #b8b1a6 5px,
+    #b8b1a6 7px,
+    /* 5) next peak start */
+    #d7d2c8 7px,
+    #d7d2c8 8px
+  );
+  border: 1px solid #1a1817;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: repeating-linear-gradient(
+    to bottom,
+    #f3f2ee 0,
+    #f3f2ee 1px,
+    #c46863 1px,
+    #c46863 3px,
+    #672926 3px,
+    #672926 5px,
+    #c46863 5px,
+    #c46863 7px,
+    #f3f2ee 7px,
+    #f3f2ee 8px
+  );
+}
+::-webkit-scrollbar-corner {
+  background: #14110f;
+}
+/* Firefox 표준 — corrugated 패턴 불가, 가까운 색상 매칭 */
+html {
+  scrollbar-width: auto;
+  scrollbar-color: var(--color-ink-soft) #14110f;
+}
+
 ::selection {
   background: var(--color-accent);
   color: var(--color-paper);
