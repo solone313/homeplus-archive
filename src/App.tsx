@@ -22,11 +22,11 @@ function ScrollToTop() {
 }
 
 /**
- * Idle landing — 20초간 사용자 입력 없으면 STORY 첫 화면으로 복귀.
+ * Idle landing — 입력 없으면 STORY 첫 화면으로 복귀 (기본 5분).
  * 키오스크 / 전시 모드를 위한 attract loop. 입력 종류는 scroll, mousemove,
  * keydown, touchstart, click — 어떤 시그널이든 타이머 reset. 이미 / 의 최상단에
  * 있다면 no-op. */
-function IdleReset({ idleMs = 20_000 }: { idleMs?: number }) {
+function IdleReset({ idleMs = 5 * 60_000 }: { idleMs?: number }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const timerRef = useRef<number | null>(null);
@@ -69,7 +69,7 @@ function App() {
   return (
     <HashRouter>
       <ScrollToTop />
-      <IdleReset idleMs={20_000} />
+      <IdleReset idleMs={5 * 60_000} />
       <Nav />
       <Routes>
         <Route path="/" element={<Story />} />

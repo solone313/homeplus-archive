@@ -341,16 +341,32 @@ export function Story() {
       </Section>
 
       {/* THANKS TO — credit roll gif (cinematic, self-contained) ───── */}
-      <section className="mx-auto max-w-[1440px] px-4 py-20 md:px-10 md:py-28">
-        <RevealOnView delay={0} duration={500} className="mx-auto max-w-[820px]">
+      <section id="thanks" className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 py-20 md:px-10 md:py-28">
+        <header className="mb-10 text-center md:mb-14">
+          <RevealOnView as="p" delay={0} duration={400} className="inline-flex items-center justify-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
+            <SaiLogo className="h-[10px] w-auto" />
+            SCENE 05 — THANKS TO
+          </RevealOnView>
+          <RevealOnView delay={80} duration={500}>
+            <h2 className="mt-4 text-[7vw] font-extrabold leading-[1.1] tracking-[-0.035em] md:mt-5 md:text-[clamp(2rem,4vw,4rem)]">
+              도와준 사람들
+            </h2>
+          </RevealOnView>
+          <RevealOnView delay={180} duration={450}>
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-soft md:mt-4">
+              함께 만들어준 손과 마음들에게.
+            </p>
+          </RevealOnView>
+        </header>
+        <RevealOnView delay={280} duration={500} className="mx-auto max-w-[820px]">
           <img
             src={`${import.meta.env.BASE_URL}credits.gif`}
-            alt="THANKS TO — 도와준 사람들 크레딧"
+            alt="도와준 사람들 14명 크레딧 — 선희·주연·이경·호진·주원·혜성·허씨자매들·동규·후림·형준·하윤·세진·신웅·나영"
             loading="lazy"
             className="block w-full"
           />
         </RevealOnView>
-        <RevealOnView delay={400} duration={500} className="mt-10 flex justify-center md:mt-14">
+        <RevealOnView delay={520} duration={500} className="mt-10 flex justify-center md:mt-14">
           <span className="h-px w-12 bg-line" />
         </RevealOnView>
       </section>
