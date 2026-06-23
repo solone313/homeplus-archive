@@ -376,13 +376,6 @@ export function Story() {
         <p className="rule-dim mb-4">END · 더 보기</p>
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
           <a
-            href="#/drawings"
-            className="group inline-flex items-center justify-between border border-ink bg-paper px-4 py-3 font-mono text-[11px] tracking-[0.25em] transition-colors hover:bg-ink hover:text-paper md:px-5"
-          >
-            <span>도면 전체 보기 · DRAWINGS</span>
-            <span className="ml-3 transition-transform group-hover:translate-x-1">→</span>
-          </a>
-          <a
             href="#/film"
             className="group inline-flex items-center justify-between border border-ink bg-paper px-4 py-3 font-mono text-[11px] tracking-[0.25em] transition-colors hover:bg-ink hover:text-paper md:px-5"
           >
