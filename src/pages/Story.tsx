@@ -5,6 +5,7 @@ import { VideoPlayer } from "../components/VideoPlayer";
 import { NaverMap } from "../components/NaverMap";
 import { Lightbox } from "../components/Lightbox";
 import { StreetviewTimeline } from "../components/StreetviewTimeline";
+import { ThanksWall } from "../components/ThanksWall";
 import {
   STORY_INTRO_VIDEO,
   STORY_INTRO_POSTER,
@@ -391,7 +392,7 @@ export function Story() {
         </div>
       </Section>
 
-      {/* THANKS TO — credit roll gif (cinematic, self-contained) ───── */}
+      {/* THANKS TO — corrugated shutter wall with hover-reveal roles ─── */}
       <section id="thanks" className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 py-20 md:px-10 md:py-28">
         <header className="mb-10 text-center md:mb-14">
           <RevealOnView as="p" delay={0} duration={400} className="inline-flex items-center justify-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
@@ -409,13 +410,8 @@ export function Story() {
             </p>
           </RevealOnView>
         </header>
-        <RevealOnView delay={280} duration={500} className="mx-auto max-w-[820px]">
-          <img
-            src={`${import.meta.env.BASE_URL}credits.gif`}
-            alt="도와준 사람들 14명 크레딧 — 선희·주연·이경·호진·주원·혜성·허씨자매들·동규·후림·형준·하윤·세진·신웅·나영"
-            loading="lazy"
-            className="block w-full"
-          />
+        <RevealOnView delay={280} duration={500}>
+          <ThanksWall />
         </RevealOnView>
         <RevealOnView delay={520} duration={500} className="mt-10 flex justify-center md:mt-14">
           <span className="h-px w-12 bg-line" />
