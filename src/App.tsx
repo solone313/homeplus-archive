@@ -4,7 +4,6 @@ import {
   Route,
   Routes,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 import { Nav } from "./components/Nav";
 import { Story } from "./pages/Story";
@@ -29,38 +28,25 @@ function ScrollToTop() {
 }
 
 /**
- * Idle attract — 입력 없으면 (1) STORY 첫 화면 최상단으로 복귀, (2) INTRO
- * FILM 영상을 풀스크린 overlay 로 띄워 무한 반복. 어떤 입력이든 overlay
- * dismiss + 타이머 reset. 키오스크 / 전시 모드용.
+ * Idle attract — 입력 없으면 INTRO FILM 영상을 풀스크린 overlay 로 띄워
+ * 무한 반복. 어떤 입력이든 overlay dismiss + 타이머 reset. 키오스크 /
+ * 전시 모드용.
  *
  * 동작:
  *  - 입력 종류: scroll, mousemove, keydown, touchstart, click
- *  - 5분(기본) idle → scroll-to-top (smooth) → overlay show
- *  - overlay 가 뜬 상태에서 입력 들어오면 overlay hide + 타이머 재무장
- *  - / 가 아닌 페이지에서 idle 발생 시 / 로 navigate 한 뒤 overlay show
+ *  - 5분(기본) idle → overlay show (스크롤 위치는 손대지 않음 — sticky/
+ *    framer-motion 같은 페이지 내부 scroll 로직과 충돌 회피)
+ *  - overlay 가 뜬 상태에서 입력 들어오면 overlay hide + 타이머 재무장.
+ *    dismiss 후 사용자가 보던 위치 그대로 유지.
  */
 function IdleAttract({ idleMs = 5 * 60_000 }: { idleMs?: number }) {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
   const timerRef = useRef<number | null>(null);
-  const pathRef = useRef(pathname);
-  pathRef.current = pathname;
   const [overlayOn, setOverlayOn] = useState(false);
   const overlayRef = useRef(overlayOn);
   overlayRef.current = overlayOn;
 
   useEffect(() => {
     const fire = () => {
-      // 1) 첫 화면 최상단으로 복귀
-      if (pathRef.current !== "/") {
-        navigate("/");
-        requestAnimationFrame(() =>
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
-        );
-      } else if (window.scrollY > 4) {
-        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-      }
-      // 2) 영상 overlay show
       setOverlayOn(true);
     };
 
@@ -85,7 +71,7 @@ function IdleAttract({ idleMs = 5 * 60_000 }: { idleMs?: number }) {
       if (timerRef.current) window.clearTimeout(timerRef.current);
       events.forEach((ev) => window.removeEventListener(ev, onInput));
     };
-  }, [idleMs, navigate]);
+  }, [idleMs]);
 
   if (!overlayOn) return null;
   // 풀스크린 attract overlay. iframe key 로 overlay 재진입 시 깨끗하게 remount.
@@ -115,7 +101,7 @@ function App() {
   return (
     <HashRouter>
       <ScrollToTop />
-      <IdleAttract idleMs={5 * 60_000} />
+      <IdleAttract idleMs={30_000} />
       <Nav />
       <Routes>
         <Route path="/" element={<Story />} />
