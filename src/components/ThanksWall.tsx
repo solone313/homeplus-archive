@@ -12,22 +12,23 @@ import { AnimatePresence, motion } from "framer-motion";
 type Person = { name: string; role: string; x: number; y: number };
 
 // 좌표(%) 는 사진에 5% grid 를 덮어 직접 측정한 이름표 중심 픽셀.
-// 사진(1166×1458) 비율을 고정해서 반응형으로 자동 스케일됨.
+// 사진(1094×1386) 비율을 고정해서 반응형으로 자동 스케일됨.
+// (원본 1166×1458 에서 36px 흰 테두리 trim 후 좌표 변환 적용.)
 const PEOPLE: Person[] = [
-  { name: "선희", role: "작업실의 밥 로스 겸 멘탈 테라피스트", x: 42, y: 21 },
-  { name: "주연", role: "전시계획 디렉터 겸 렌더 후보정팀", x: 62, y: 25 },
-  { name: "이경", role: "모형 총감독", x: 36, y: 28 },
-  { name: "호진", role: "웹사이트 제작자 겸 생존지원팀", x: 53, y: 33 },
-  { name: "주원", role: "판넬·영상 제작지원팀", x: 67, y: 40 },
-  { name: "혜성", role: "설계의 북극성 겸 영상지원팀", x: 44, y: 45 },
-  { name: "허씨자매들", role: "긴급지원팀", x: 63, y: 50 },
-  { name: "동규", role: "모형·3D 프린팅 제작지원팀", x: 34, y: 55 },
-  { name: "후림", role: "모형·3D 프린팅 제작지원팀", x: 40, y: 59 },
-  { name: "형준", role: "멘탈케어 겸 운반지원팀", x: 58, y: 67 },
-  { name: "하윤", role: "디테일 긴급구조대", x: 54, y: 72 },
-  { name: "세진", role: "조경 방향잡이", x: 65, y: 81 },
-  { name: "신웅", role: "깨알 디테일팀", x: 41, y: 85 },
-  { name: "나영", role: "디테일 겸 졸전 기동지원대", x: 50, y: 87 },
+  { name: "선희", role: "작업실의 밥 로스 겸 멘탈 테라피스트", x: 41.5, y: 19.5 },
+  { name: "주연", role: "전시계획 디렉터 겸 렌더 후보정팀", x: 62.8, y: 23.7 },
+  { name: "이경", role: "모형 총감독", x: 35.1, y: 26.9 },
+  { name: "호진", role: "웹사이트 제작자 겸 생존지원팀", x: 53.2, y: 32.1 },
+  { name: "주원", role: "판넬·영상 제작지원팀", x: 68.1, y: 39.5 },
+  { name: "혜성", role: "설계의 북극성 겸 영상지원팀", x: 43.6, y: 44.7 },
+  { name: "허씨자매들", role: "긴급지원팀", x: 63.9, y: 50.0 },
+  { name: "동규", role: "모형·3D 프린팅 제작지원팀", x: 32.9, y: 55.3 },
+  { name: "후림", role: "모형·3D 프린팅 제작지원팀", x: 39.3, y: 59.5 },
+  { name: "형준", role: "멘탈케어 겸 운반지원팀", x: 58.5, y: 67.9 },
+  { name: "하윤", role: "디테일 긴급구조대", x: 54.3, y: 73.1 },
+  { name: "세진", role: "조경 방향잡이", x: 66.0, y: 82.6 },
+  { name: "신웅", role: "깨알 디테일팀", x: 40.4, y: 86.8 },
+  { name: "나영", role: "디테일 겸 졸전 기동지원대", x: 50.0, y: 88.9 },
 ];
 
 export function ThanksWall() {
@@ -37,7 +38,7 @@ export function ThanksWall() {
     <figure className="mx-auto w-full max-w-[680px]">
       <div
         className="relative w-full overflow-hidden border border-line bg-paper-soft"
-        style={{ aspectRatio: "1166 / 1458" }}
+        style={{ aspectRatio: "1094 / 1386" }}
       >
         <img
           src={`${import.meta.env.BASE_URL}media/thanks-wall.jpg`}
