@@ -37,7 +37,7 @@ export function ThanksWall() {
   return (
     <figure className="mx-auto w-full max-w-[680px]">
       <div
-        className="relative w-full overflow-hidden border border-line bg-paper-soft"
+        className="relative w-full overflow-hidden"
         style={{ aspectRatio: "1094 / 1386" }}
       >
         <img
