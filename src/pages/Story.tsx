@@ -133,10 +133,36 @@ export function Story() {
         </RevealOnView>
       </section>
 
-      {/* 02 SITE ───────────────────────────────────── */}
-      {/* SCENE 02 header — separate section so the panorama below can use
+      {/* 02 CONTEXT ───────────────────────────────────── */}
+      {/* narrative: 영상 다음 — 이 설계가 어디에서, 어떤 동네 맥락 위에서 시작
+          되는지. 노후계획도시 가양 2동, 작은 가구가 밀집한 동네, 사라지는
+          대형마트. site-context.png 는 thesis 본문의 SITE 분석 페이지. */}
+      <Section
+        id="context"
+        tag="SCENE 02 — CONTEXT"
+        title={
+          <>
+            노후계획도시,<br className="md:block" />
+            <span className="text-accent">가양 2동</span>
+          </>
+        }
+        subtitle="작은 가구가 모인 노후 주거지, 그 위에 25년간 부엌·갤러리·운동장이었던 대형마트가 폐점한다. 마지막 풍경 위에서 사이집은 시작된다."
+      >
+        <Lightbox
+          src={`${import.meta.env.BASE_URL}media/site-context.png`}
+          alt="가양 2동 사이트 분석 — 가구 구성, 사라지는 대형마트, 도시 맥락"
+          ratio="16/9"
+        />
+        <p className="mt-3 font-mono text-[10px] tracking-[0.22em] text-mute md:text-[11px]">
+          ↳ 클릭해 확대 — 도면 라벨과 데이터가 함께 보입니다
+        </p>
+      </Section>
+
+      {/* 03 SITE ───────────────────────────────────── */}
+      {/* SCENE 03 header — separate section so the panorama below can use
           position: sticky without being trapped under a transformed ancestor.
-          narrative: SITE 가 먼저 — 사라지는 자리를 본 뒤에 WHY (설계 근거) 로 흐름. */}
+          narrative: 동네 맥락 (CONTEXT) 다음에, 가양점 자체의 마지막 15년을
+          본다. 그리고 ISSUE 로 macro 사회 배경을 끌어올린 뒤 WHY 로 응답. */}
       <section
         id="site"
         className="relative mx-auto max-w-[1440px] scroll-mt-16 px-4 pt-16 md:px-10 md:pt-24"
@@ -144,7 +170,7 @@ export function Story() {
         <header className="mb-0">
           <RevealOnView as="p" delay={0} duration={400} className="mb-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px] md:mb-4">
             <SaiLogo className="h-[10px] w-auto" />
-            SCENE 02 — SITE
+            SCENE 03 — SITE
           </RevealOnView>
           <RevealOnView delay={80} duration={500}>
             <h2 className="text-[8vw] font-extrabold leading-[1.15] tracking-[-0.035em] md:text-[clamp(2.5rem,5vw,5rem)]">
@@ -165,7 +191,7 @@ export function Story() {
         <StreetviewTimeline />
       </div>
 
-      {/* SCENE 02 body — photos, map, layers */}
+      {/* SCENE 03 body — photos, map, layers */}
       <section className="relative mx-auto max-w-[1440px] px-4 pb-16 md:px-10 md:pb-24">
         <RevealOnView delay={0} duration={500}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6 mt-12 md:mt-20">
@@ -189,11 +215,36 @@ export function Story() {
         </RevealOnView>
       </section>
 
-      {/* 03 WHY ───────────────────────────────────── */}
-      {/* narrative: SITE 의 사라짐을 본 뒤, 설계가 응답하는 'WHY' — 비움이 답이다. */}
+      {/* 04 ISSUE ───────────────────────────────────── */}
+      {/* narrative: SITE 의 마지막 풍경 뒤, 카메라가 줌아웃 — 한 동네의 문제가
+          아니라 한 사회의 문제임을 드러낸다. 1인 가구 폭증·외로움 심화·주거
+          압축. issue.png 는 thesis 의 통계 페이지 원본. */}
+      <Section
+        id="issue"
+        tag="SCENE 04 — ISSUE"
+        title={
+          <>
+            혼자 사는<br className="md:block" />
+            <span className="text-accent">사회</span>
+          </>
+        }
+        subtitle="가양만의 일이 아니다. 1인 가구는 2000년 15.5%에서 2024년 36.1%로 두 배 이상 늘었고, 외로움이 깊어지고, 주거는 잠자고 먹는 비체류 공간으로 압축된다."
+      >
+        <Lightbox
+          src={`${import.meta.env.BASE_URL}media/issue.png`}
+          alt="혼자 사는 사회 — 1인 가구 비율, 외로움 통계, 주거 압축 통계"
+          ratio="16/9"
+        />
+        <p className="mt-3 font-mono text-[10px] tracking-[0.22em] text-mute md:text-[11px]">
+          ↳ 클릭해 확대 — 원본 통계와 출처가 그대로 보존돼 있습니다
+        </p>
+      </Section>
+
+      {/* 05 WHY ───────────────────────────────────── */}
+      {/* narrative: macro issue 까지 본 뒤, 설계가 응답하는 'WHY' — 비움이 답이다. */}
       <Section
         id="why"
-        tag="SCENE 03 — WHY"
+        tag="SCENE 05 — WHY"
         title={
           <>
             먹고자는 것 이상의{" "}
@@ -266,7 +317,7 @@ export function Story() {
       {/* 04 VOID ───────────────────────────────────── */}
       <Section
         id="unit-design"
-        tag="SCENE 04 — UNIT DESIGN"
+        tag="SCENE 06 — UNIT DESIGN"
         title={
           <>
             <span className="text-accent">두께</span>를<br className="md:block" />
@@ -345,7 +396,7 @@ export function Story() {
         <header className="mb-10 text-center md:mb-14">
           <RevealOnView as="p" delay={0} duration={400} className="inline-flex items-center justify-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-mute md:text-[12px]">
             <SaiLogo className="h-[10px] w-auto" />
-            SCENE 05 — THANKS TO
+            SCENE 07 — THANKS TO
           </RevealOnView>
           <RevealOnView delay={80} duration={500}>
             <h2 className="mt-4 text-[7vw] font-extrabold leading-[1.1] tracking-[-0.035em] md:mt-5 md:text-[clamp(2rem,4vw,4rem)]">
